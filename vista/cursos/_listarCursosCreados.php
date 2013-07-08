@@ -9,6 +9,7 @@
             <table class="table table-bordered table-hover">
                 <thead style="background-color: #e5e5e5">
                 <th> Nombre</th>
+                <th> Código</th>
                 <th># de estudiantes</th>
                 <th># de Temas</th>   
                 <th># de problemas</th>   
@@ -26,7 +27,9 @@
                         $participant = $c->getInfoParticipant($data['id_course'], $current_user);
                         $profesor = $c->getInfoUser($c->getOneField($result, 'id_user'));
                         ?>
-                        <tr><td><center><em><?php echo $c->getOneField($result, 'name') ?></em></center></td>
+                        <tr>
+                            <td><center><em><?php echo $c->getOneField($result, 'name') ?></em></center></td>
+                            <td><center><em><?php echo $c->getOneField($result, 'registration_code') ?></em></center></td>
                             <td><center><?php echo $c->getNumeroEstudiantes($data['id_course']) ?></center></td>  
                             <td><center><?php echo $c->getNumeroTemas($data['id_course']) ?></center></td>  
                             <td><center><?php echo $c->getNumeroProblemas($data['id_course']) ?></center></td>  

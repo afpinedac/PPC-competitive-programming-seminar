@@ -40,6 +40,7 @@ if (isset($_SESSION['user']['username'])) {
             require("./vista/cursos/_inscribirCurso.php");
         } else if ($option == "crearNuevo" && $current_user_rol == 1) {
             require("./vista/cursos/_crearCurso.php");
+           
         } else if ($option == "eliminar") {
             $c->eliminarParticipante($current_user, $idCurso);
             mostrarCursos();
@@ -87,6 +88,7 @@ if (isset($_SESSION['user']['username'])) {
         } else if ($option == "editarInfo") {
             $query = "UPDATE user SET name='$name', lastName='$lastName', password='$password',username='$username',email='$email', university='$university' WHERE id_user='$id_user'";
             $c->realizarConsulta($query);
+            echo "<script>alert('La información fue actualizada correctamente')</script>";
             echo "<script>location.href='curso.php?option=editarInformacion'</script>";
         }
     } else {
@@ -109,7 +111,7 @@ function mostrarCursos() {
         require("./vista/templates/_message.php");
         $data['tipo'] = "error";
         $data['message'] = "Si desea puede inscribirse al curso del semillero de Programación de UNALMED, código: semillero@13";
-        require("./vista/_message.php");
+        require("./vista/templates/_message.php");
     }
 
     if ($current_user_rol == 1) {

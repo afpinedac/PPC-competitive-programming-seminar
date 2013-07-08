@@ -6,11 +6,11 @@
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr id="header_ranking" class="success">
-                        <td><h5>Posición</h5></td>  
-                        <td><h5>Username</h5></td>           
-                        <td><h5>Ejercicios Resueltos</h5></td> 
-                        <!--<td><h5>Porcentaje</h5></td>-->                       
-                    </tr>    
+                        <th><center><h5>Posición</h5></center></th>  
+                <th><center><h5>Usuario</h5></center></th>           
+                <th><center><h5>Ejercicios Resueltos</h5></center></th> 
+                <!--<td><h5>Porcentaje</h5></td>-->                       
+                </tr>    
                 </thead>
                 <tbody>
 
@@ -22,9 +22,9 @@
 
 
                         echo "<tr>
-            <td>" . ($pos++) . "</td>                
-            <td>" . $rw[0] . "</td>           
-            <td>" . $rw[1] . "</td>  
+            <td width='10%'><center>" . ($pos++) . "</center></td>                
+            <td width='45%'><center>" . $rw[0] . "</center></td>           
+            <td><center>" . $rw[1] . "</center></td>  
                  
             ";
                     }
@@ -38,8 +38,8 @@
 
 <style>
     #header_ranking{
-        background: #85ADFF;
+        background: #e5e5e5;
         font-size: 30px;
     }
-    
+
 </style>    

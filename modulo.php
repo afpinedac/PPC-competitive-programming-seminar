@@ -29,7 +29,7 @@ if (isset($_SESSION['course']['idCurso'])) {
             echo "<script>location.href='index.php'</script>";
         } else if ($option == "verRanking") {
             $result = $c->getRankingCurso($current_course);
-            require('./vista/_rankingCurso.php');
+            require('./vista/cursos/_rankingCurso.php');
         } else if ($option == "verRecursos") {
             $result = $c->getRecursos($current_course);
             require('./vista/_recursos.php');

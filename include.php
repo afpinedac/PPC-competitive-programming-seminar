@@ -7,4 +7,5 @@ require("clases/util.php");
 
 util::escapar($_GET);
 util::escapar($_POST);
+
 ?>
