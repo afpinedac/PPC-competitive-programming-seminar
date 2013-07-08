@@ -9,7 +9,8 @@ if (isset($_SESSION['course']['idCurso']) && $_SESSION['user']['rol'] == 1) {
     $c = new conector_mysql();
     $current_user = $_SESSION['user']['idUser'];
     $current_course = $_SESSION['course']['idCurso'];
-    $COURSE_NAME = $c->getOneField($c->getInfoCurso($current_course), 'name');;
+    $COURSE_NAME = $c->getOneField($c->getInfoCurso($current_course), 'name');
+    ;
 
     require("./vista/templates/header.php");
     require("./vista/_graphHeader.php");

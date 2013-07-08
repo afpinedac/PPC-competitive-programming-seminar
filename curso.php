@@ -19,7 +19,7 @@ if (isset($_SESSION['user']['username'])) {
 //CABECERAS
 
     require("./vista/templates/header.php");
-    require("./vista/_curso.php");
+    require("./vista/cursos/_curso.php");
 
     if (isset($option)) {
         if ($option == "logout") {
@@ -33,13 +33,13 @@ if (isset($_SESSION['user']['username'])) {
             } else {
                 $data['tipo'] = 'error';
                 $data['message'] = "El codigo es inválido";
-                require("./vista/_message.php");
-                require("./vista/_inscribirCurso.php");
+                require("./vista/templates/_message.php");
+                require("./vista/cursos/_inscribirCurso.php");
             }
         } else if ($option == "inscribir") {
-            require("./vista/_inscribirCurso.php");
+            require("./vista/cursos/_inscribirCurso.php");
         } else if ($option == "crearNuevo" && $current_user_rol == 1) {
-            require("./vista/_crearCurso.php");
+            require("./vista/cursos/_crearCurso.php");
         } else if ($option == "eliminar") {
             $c->eliminarParticipante($current_user, $idCurso);
             mostrarCursos();
@@ -50,13 +50,13 @@ if (isset($_SESSION['user']['username'])) {
             if ($c->registrarCurso($current_user, $nombre, $codigo)) {
                 $data['tipo'] = "success";
                 $data['message'] = "Curso creado correctamente";
-                require("./vista/_message.php");
+                require("./vista/templates/_message.php");
                 mostrarCursos();
             } else {
                 $data['tipo'] = "error";
                 $data['message'] = "El código del curso ya esta en uso";
-                require("./vista/_message.php");
-                require("./vista/_crearCurso.php");
+                require("./vista/templates/_message.php");
+                require("./vista/cursos/_crearCurso.php");
             }
         } else if ($option == "eliminarCursoCreado" && $current_user_rol == 1) {
             $c->eliminarCursoCreado($idCurso);
@@ -83,7 +83,7 @@ if (isset($_SESSION['user']['username'])) {
             $data['password'] = $c->getOneField($user, 'password');
             $data['email'] = $c->getOneField($user, 'email');
             $data['universidad'] = $c->getOneField($user, 'university');
-            require("./vista/_editarInformacion.php");
+            require("./vista/usuario/_editarInformacion.php");
         } else if ($option == "editarInfo") {
             $query = "UPDATE user SET name='$name', lastName='$lastName', password='$password',username='$username',email='$email', university='$university' WHERE id_user='$id_user'";
             $c->realizarConsulta($query);
@@ -102,11 +102,11 @@ if (isset($_SESSION['user']['username'])) {
 function mostrarCursos() {
     global $c, $current_user, $current_user_rol;
     if ($cursos = $c->getMyCursos($current_user)) {
-        require("./vista/_listaCursos.php");
+        require("./vista/cursos/_listaCursos.php");
     } else {
         $data['tipo'] = "error";
         $data['message'] = "Actualmente no tiene cursos inscritos";
-        require("./vista/_message.php");
+        require("./vista/templates/_message.php");
         $data['tipo'] = "error";
         $data['message'] = "Si desea puede inscribirse al curso del semillero de Programación de UNALMED, código: semillero@13";
         require("./vista/_message.php");
@@ -114,11 +114,11 @@ function mostrarCursos() {
 
     if ($current_user_rol == 1) {
         if ($cursos = $c->getMyCursosCreados($current_user)) {
-            require("./vista/_listarCursosCreados.php");
+            require("./vista/cursos/_listarCursosCreados.php");
         } else {
             $data['tipo'] = "error";
             $data['message'] = "Actualmente no tiene cursos creados";
-            require("./vista/_message.php");
+            require("./vista/templates/_message.php");
         }
     }
 }

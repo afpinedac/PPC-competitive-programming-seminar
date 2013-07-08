@@ -48,7 +48,6 @@ class conector_mysql {
         if (!$this->isEmpty($id)) {
             return $id;
         } return false;
-      
     }
 
     function validarCodigo($code, $user) {
@@ -355,7 +354,7 @@ WHERE participant.id_user=solved.id_user AND solved.id_problem=problem.id_proble
     }
 
     //funcioon que crea un recurso
-    function crearRecurso($curso,$data) {
+    function crearRecurso($curso, $data) {
         $query = "INSERT INTO resource(id_course,url,description) VALUES('$curso','{$data['url']}','{$data['description']}')";
         $this->realizarConsulta($query);
     }
