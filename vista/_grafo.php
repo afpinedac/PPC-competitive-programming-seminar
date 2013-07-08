@@ -27,7 +27,7 @@
             
             //JSPLUMB   
             jsPlumb.bind("ready",function(){
-                console.log('estoy listo JSPLUMB');
+               // console.log('estoy listo JSPLUMB');
                 jsPlumb.setRenderMode(jsPlumb.SVG);
 //                jsPlumb.bind("click",function(w){
 //                    if(confirm("Desea eliminar la conexion?")){
@@ -67,7 +67,7 @@
             }
                       
             function setEdge(div1,div2){   
-                console.log("--"  + div1);
+               // console.log("--"  + div1);
                 //insertemos en la base de datos
                 if(isValidConnection(div1,div2)){
                     conectar(div1,div2);
@@ -87,7 +87,7 @@
                 jsPlumb.connect({ source:e1, target:e2, paintStyle:{strokeStyle:"gray", lineWidth:2} , overlays: [
                         [ "Arrow", { foldback:0.9 } ]    
                     ]}); 
-                console.log("termino3");
+             //   console.log("termino3");
             }
             
            

@@ -20,14 +20,14 @@ class ws {
     }
 
     static function getIdUser($username) {
-      //  echo "ws:: " . $username;
+        //  echo "ws:: " . $username;
         return ws::getText("http://uhunt.felix-halim.net/api/uname2uid/" . $username);
     }
 
     static function getSubmissions($id) {
         $info = ws::getText("http://uhunt.felix-halim.net/api/subs/" . $id);
-        $info=  json_decode($info);
-        $options=  json_decode($info->subs);
+        $info = json_decode($info);
+        $options = json_decode($info->subs);
         return $options;
     }
 
@@ -36,13 +36,12 @@ class ws {
         $info = json_decode($info);
         return $info->{$data};
     }
-    
+
     static function getInfoProblem2($id, $data) {
         $info = ws::getText("http://uhunt.felix-halim.net/api/p/id/" . $id);
         $info = json_decode($info);
         return $info->{$data};
     }
-    
 
 }
 

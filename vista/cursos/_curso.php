@@ -10,22 +10,22 @@
             </a>
 
             <!-- Be sure to leave the brand out there if you want it shown -->
-            <a class="brand" href="curso.php">Practice Center</a>
+            <a class="brand" href="curso.php"><i class='icon-star'></i> Programming Practice Center</a>
 
             <!-- Everything you want hidden at 940px or less, place within here -->
             <div class="nav-collapse collapse navbar-responsive-collapse">
                 <!-- .nav, .navbar-search, .navbar-form, etc -->
                 <ul class="nav">
                     <li class=>
-                        <a href="http://unalmed.3eeweb.com/uva/" target="_blank">Ranking Unalmed</a>
+                        <a href="http://unalmed.3eeweb.com/uva/" target="_blank"><i class='icon-list-alt'></i> Ranking Unalmed</a>
                     </li>
-                    
+
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cursos
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class='icon-book'></i> Cursos
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                            <li> <a href="curso.php">Mis Cursos</a><li>
+                            <li> <a href="curso.php"> Mis Cursos</a><li>
                             <li> <a href="curso.php?option=inscribir">Inscribir nuevo</a><li>
                                 <?php if ($_SESSION['user']['rol'] == 1): ?>                                    
                                 <li> <a href="curso.php?option=crearNuevo">Crear nuevo</a><li>
@@ -41,9 +41,9 @@
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                            <li> <a href="curso.php?option=editarInformacion">Editar Información</a><li>
+                            <li> <a href="curso.php?option=editarInformacion"><i class='icon-edit'></i> Editar Información</a><li>
                             <li class="divider"></li>   
-                            <li> <a href="curso.php?option=logout">Salir</a><li>
+                            <li> <a href="curso.php?option=logout"><i class='icon-off'></i> Salir</a><li>
 
                         </ul>    
                     </li>   
@@ -58,10 +58,10 @@
                         <br/>
 
                         <script>
-                            $(document).ready(function(){
+                            $(document).ready(function() {
                                 $(".dropdown-toggle").dropdown();
-      
+
                             });
-    
-    
+
+
                         </script>    

@@ -48,6 +48,7 @@ class conector_mysql {
         if (!$this->isEmpty($id)) {
             return $id;
         } return false;
+      
     }
 
     function validarCodigo($code, $user) {

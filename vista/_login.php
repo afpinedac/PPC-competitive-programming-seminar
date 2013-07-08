@@ -12,7 +12,7 @@
     <div class="modal-body">
         <form id="form1" class="form-horizontal" onsubmit="return login();">
             <div class="control-group">
-                <label class="control-label" for="inputEmail">User</label>
+                <label class="control-label" for="inputEmail">Usuario</label>
                 <div class="controls">
                     <input type="text" id="inputEmail" name="username" placeholder="Usuario UVA">
                 </div>

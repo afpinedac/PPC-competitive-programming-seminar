@@ -11,7 +11,7 @@ if (isset($_SESSION['course']['idCurso']) && $_SESSION['user']['rol'] == 1) {
     $current_course = $_SESSION['course']['idCurso'];
     $COURSE_NAME = $c->getOneField($c->getInfoCurso($current_course), 'name');;
 
-    require("./vista/header.php");
+    require("./vista/templates/header.php");
     require("./vista/_graphHeader.php");
 
 
@@ -23,7 +23,7 @@ if (isset($_SESSION['course']['idCurso']) && $_SESSION['user']['rol'] == 1) {
         mostrarGrafo();
     }
 
-    require('./vista/footer.php');
+    require('./vista/templates/footer.php');
 } else {
     echo 'no tiene permiso para ver esta pagina';
 }

@@ -1,7 +1,7 @@
 <?php
 
 require("include.php");
-require("./vista/header.php");
+require("./vista/templates/header.php");
 
 if (isset($_GET['option'])) {
     $opt = $_GET['option'];
@@ -12,9 +12,8 @@ if (isset($_GET['option'])) {
         require("./vista/_register.php");
     }
 } else {
-   // echo ws::getSubmissions(ws::getIdUser("andr3s2"));
-    
-    require("./vista/_index.php"); 
-}
 
-?>
+
+    require("./vista/_index.php");
+}
+require './vista/templates/footer.php';

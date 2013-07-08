@@ -18,7 +18,7 @@ if (isset($_SESSION['user']['username'])) {
     //$data=ws::getIdUser($c->getOneField($c->getInfoUser($current_user), 'username'));
 //CABECERAS
 
-    require("./vista/header.php");
+    require("./vista/templates/header.php");
     require("./vista/_curso.php");
 
     if (isset($option)) {
@@ -92,7 +92,7 @@ if (isset($_SESSION['user']['username'])) {
     } else {
         mostrarCursos();
     }
-    require("./vista/footer.php");
+    require("./vista/templates/footer.php");
 } else {
     echo "ud no tiene permiso";
 }

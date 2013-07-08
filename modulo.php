@@ -20,7 +20,7 @@ if (isset($_SESSION['course']['idCurso'])) {
     //   echo $current_user;
 //CABECERAS
 
-    require("./vista/header.php");
+    require("./vista/templates/header.php");
     require("./vista/_modulo.php");
 
     if (isset($option)) {
@@ -42,7 +42,7 @@ if (isset($_SESSION['course']['idCurso'])) {
         cargarProblemasSolucionados();
         mostrarGrafo();
     }
-    require("./vista/footer.php");
+   require('./vista/templates/footer.php');
 } else {
     echo "ud no tiene permiso para ver el modulo";
 }
