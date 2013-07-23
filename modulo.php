@@ -32,17 +32,24 @@ if (isset($_SESSION['course']['idCurso'])) {
             require('./vista/cursos/_rankingCurso.php');
         } else if ($option == "verRecursos") {
             $result = $c->getRecursos($current_course);
-            require('./vista/_recursos.php');
+            $n_recursos = $c->numFilas($result);
+            require('./vista/cursos/_recursos.php');
         } else if ($option == "crearRecurso") {
             $data = $_POST;
+            $data['id_user'] = $current_user;
             $c->crearRecurso($current_course, $data);
+            echo "<script>location.href='modulo.php?option=verRecursos'</script>";
+        } else if ($option == "eliminarRecurso" && isset($_POST['id_resource'])) {
+            $data = $_POST;
+            $data['id_user'] = $current_user;
+            $c->eliminarRecurso($data);
             echo "<script>location.href='modulo.php?option=verRecursos'</script>";
         }
     } else {
         cargarProblemasSolucionados();
         mostrarGrafo();
     }
-   require('./vista/templates/footer.php');
+    require('./vista/templates/footer.php');
 } else {
     echo "ud no tiene permiso para ver el modulo";
 }

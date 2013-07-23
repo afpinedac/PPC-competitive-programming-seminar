@@ -12,13 +12,12 @@ $current_user = $_SESSION['user']['idUser'];
 if (isset($_GET['option'])) {
     if ($option == "getNameMinimum") {
         $topic = $c->getInfoTopic($idTopic, $current_course);
-        $val = $c->getOneField($topic, 'name') . ",";
-        if ($_SESSION['user']['rol'] == 1)
-            $val.= $c->getOneField($topic, 'minimum_solved');
-        else {
-            $val.= $c->getNumberOfProblemsSolved($current_user, $current_course, $idTopic) . "/" . $c->getNumberOfProblems($current_course, $idTopic) . ") Desbloquear con:" . $c->getOneField($topic, 'minimum_solved');
-        }
-        echo $val;
+        $data['rol'] = $_SESSION['user']['rol'];
+        $data['name'] = $c->getOneField($topic, 'name');
+        $data['number_solved_problems'] = $c->getNumberOfProblemsSolved($current_user, $current_course, $idTopic);
+        $data['number_of_problems'] = $c->getNumberOfProblems($current_course, $idTopic);
+        $data['minimum_solved'] = $c->getOneField($topic, 'minimum_solved');
+        echo json_encode($data);
     } else if ($option == "getListProblems") {
         $problems = $c->getAllProblemas($current_course, $idTopic);
         $str = "";

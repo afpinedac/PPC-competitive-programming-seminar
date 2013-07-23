@@ -17,18 +17,18 @@
                     <?php
                     $pos = 1;
                     while ($rw = mysql_fetch_array($result)) {
+                       
                         $done = $c->getProblemsSolvedCourse($current_user, $data['id_course']);
                         $total = $c->getNumeroProblemas($data['id_course']);
+                        ?>
+                        <tr class='<?php if($current_user==$rw['id_user']) echo 'success' ?>'>
+                             <td width='10%'><center><?php echo ($pos++) ?></center></td>                
+                    <td width='45%'><center><?php echo $rw[0] ?></center></td>           
+                    <td><center><?php echo $rw['c'] ?></center></td>  
 
-
-                        echo "<tr>
-            <td width='10%'><center>" . ($pos++) . "</center></td>                
-            <td width='45%'><center>" . $rw[0] . "</center></td>           
-            <td><center>" . $rw[1] . "</center></td>  
-                 
-            ";
-                    }
-                    ?>
+                    <?php
+                }
+                ?>
 
                 </tbody>   
             </table>    

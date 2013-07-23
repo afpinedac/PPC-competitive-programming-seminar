@@ -1,4 +1,4 @@
-
+<!--Grafo para el creador de un curso-->
 
 <div class="container">
     <div class="row-fluid">
@@ -12,296 +12,303 @@
 
 
 
-        <script>      
-            var endpoint = {       
-                endpoint:"Dot",            
-                isSource:true,
-                maxConnections:10,          
-                isTarget:true
-                //dropOptions:{ tolerance:"touch" , hoverClass:"dropHover" }
+        <script>
+            var endpoint = {
+                endpoint: "Dot",
+                isSource: true,
+                maxConnections: 10,
+                isTarget: true
+                        //dropOptions:{ tolerance:"touch" , hoverClass:"dropHover" }
             };
-            
-            var parent=[];
-             var child=[];
-                
-            
+
+            var parent = [];
+            var child = [];
+
+
             //JSPLUMB   
-            jsPlumb.bind("ready",function(){
-                console.log('estoy listo JSPLUMB');
+            jsPlumb.bind("ready", function() {
+              //  console.log('estoy listo JSPLUMB');
                 jsPlumb.setRenderMode(jsPlumb.SVG);
-                jsPlumb.bind("click",function(w){
-                    if(confirm("Desea eliminar la conexion?")){
+                jsPlumb.bind("click", function(w) {
+                    if (confirm("Desea eliminar la conexion?")) {
                         //eliminamos en la base de datos
-                        result=$.ajax({
-                            url:"jx_topic.php?option=deleteConnection&parent="+getIdTopic(w.sourceId)+"&child="+getIdTopic(w.targetId),
-                            async:false
+                        result = $.ajax({
+                            url: "jx_topic.php?option=deleteConnection&parent=" + getIdTopic(w.sourceId) + "&child=" + getIdTopic(w.targetId),
+                            async: false
                         }).responseText;
-                        console.log(result);
-                        if(result=="ok"){
+                        // console.log(result);
+                        if (result == "ok") {
                             jsPlumb.detach(w);
-                        }else{
+                        } else {
                             alert("Ha ocurrido un error");
                         }
                     }
                 });
                 jsPlumb.Defaults.Anchors = ["TopCenter", "TopCenter"];
-                
-                jsPlumb.Defaults.DragOptions = { cursor: 'wait', zIndex:20 };
-                jsPlumb.Defaults.Connector = [ "Straight" ];     
-                jsPlumb.Defaults.Overlays =  [ "Arrow"  ] 
-                jsPlumb.Defaults.Endpoints = [ [ "Dot", 1 ], [ "Dot", 2 ] ]
+
+                jsPlumb.Defaults.DragOptions = {cursor: 'wait', zIndex: 20};
+                jsPlumb.Defaults.Connector = ["Straight"];
+                jsPlumb.Defaults.Overlays = ["Arrow"]
+                jsPlumb.Defaults.Endpoints = [["Dot", 1], ["Dot", 2]]
                 jsPlumb.Defaults.PaintStyle = {
-                    lineWidth:5,
+                    lineWidth: 5,
                     strokeStyle: 'rgba(200,0,0,100)'
                 };
-                
-                
+
+
                 loadConnections();
             });
-            
-            
-            function loadConnections(){
-                for(i=0;i<parent.length;i++){
-                   conectar(crearIdTopic(parent[i]),crearIdTopic(child[i]));
+
+
+            function loadConnections() {
+                for (i = 0; i < parent.length; i++) {
+                    conectar(crearIdTopic(parent[i]), crearIdTopic(child[i]));
                 }
             }
-                      
-            function setEdge(div1,div2){   
-                console.log("--"  + div1);
+
+            function setEdge(div1, div2) {
+                //  console.log("--" + div1);
                 //insertemos en la base de datos
-                if(isValidConnection(div1,div2)){
-                    conectar(div1,div2);
-                    
-                }else{
+                if (isValidConnection(div1, div2)) {
+                    conectar(div1, div2);
+
+                } else {
                     alert("La conexíon no es válida");
-                }               
+                }
             }
-            
-            function conectar(div1,div2){     
-                console.log(endpoint);
-                console.log(div1  + " --- " + div2);                
+
+            function conectar(div1, div2) {
+                //  console.log(endpoint);
+                // console.log(div1 + " --- " + div2);
                 var e1 = jsPlumb.addEndpoint(div1, endpoint);
-                console.log("termino1");                  
-                var e2 = jsPlumb.addEndpoint(div2, endpoint);   
-                console.log("termino2");
-                jsPlumb.connect({ source:e1, target:e2, paintStyle:{strokeStyle:"gray", lineWidth:2} , overlays: [
-                        [ "Arrow", { foldback:0.9 } ]    
-                    ]}); 
-                console.log("termino3");
+                // console.log("termino1");
+                var e2 = jsPlumb.addEndpoint(div2, endpoint);
+                //  console.log("termino2");
+                jsPlumb.connect({source: e1, target: e2, paintStyle: {strokeStyle: "gray", lineWidth: 2}, overlays: [
+                        ["Arrow", {foldback: 0.9}]
+                    ]});
+                // console.log("termino3");
             }
-            
-           
-            function isValidConnection(div1,div2){
-                var result=$.ajax({
-                    url:"jx_topic.php?option=connect&parent="+getIdTopic(div1)+"&child="+getIdTopic(div2),
-                    async:false
+
+
+            function isValidConnection(div1, div2) {
+                var result = $.ajax({
+                    url: "jx_topic.php?option=connect&parent=" + getIdTopic(div1) + "&child=" + getIdTopic(div2),
+                    async: false
                 }).responseText;
-                
-                if(result=="ok")return true;
-                return false;   
+
+                if (result == "ok")
+                    return true;
+                return false;
             }
-            
-            
-            
-            
+
+
+
+
             //VARIALBES GLOBALES
-            var selectedDiv=null;
-            var onDiv=false;
-            var editing=null;
-            var source=null;
-            var target=null;
-           
+            var selectedDiv = null;
+            var onDiv = false;
+            var editing = null;
+            var source = null;
+            var target = null;
+
             //FUNCIONES DEL GRAFO
             //funcion que se encarga de crear un nuevo topic
-            function crearTopic(id,x,y){
+            function crearTopic(id, x, y) {
                 //      alert("id: "+  id + " x: " + x + " y: " + y);
-                console.log(x + " " + y);
-                var x=Math.round(x);
-                var y=Math.round(y);
-                console.log(x + " " + y);
+                // console.log(x + " " + y);
+                var x = Math.round(x);
+                var y = Math.round(y);
+                //console.log(x + " " + y);
                 //alert();
-                var div=$(crearDivTopic(id));
-                div.css({"top":y,"left":x});                
+                var div = $(crearDivTopic(id));
+                div.css({"top": y, "left": x});
                 $("#graph").append(div);
-              
-                
+
+
                 //FUNCIONES
-                div.click(function(){
+                div.click(function() {
                     $("div").removeClass("selected");
                     $(this).addClass("selected");
                     $("#save").addClass("unsave");
-                    selectedDiv=$(this).attr('id');
-                });  
-                
-                div.dblclick(function(e){
-                    //  e.preventDefault();                  
-                    onDiv=true;
-                    editing = getIdTopic($(this).attr('id'));                                      
-                    loadInfoTopicModal(getInfoTopic(editing,1));              
-                    
-                    $('#myModal').modal()                    
+                    selectedDiv = $(this).attr('id');
                 });
-                
+
+                div.dblclick(function(e) {
+                    //  e.preventDefault();                  
+                    onDiv = true;
+                    editing = getIdTopic($(this).attr('id'));
+                    loadInfoTopicModal(getInfoTopic(editing, 1));
+
+                    $('#myModal').modal()
+                });
+
                 //click derecho
-                div.bind('contextmenu',function(e){                 
-                    return false;                    
-                }).mousedown(function(e){
-                    if(e.button==2){
-                        source=$(this).attr('id');
-                        console.log("abajo: " + $(this).attr('id'));
+                div.bind('contextmenu', function(e) {
+                    return false;
+                }).mousedown(function(e) {
+                    if (e.button == 2) {
+                        source = $(this).attr('id');
+                        //  console.log("abajo: " + $(this).attr('id'));
                     }
                 });
-                
-                div.mouseup(function(e){
-                    if(e.button==2){
-                        target=$(this).attr('id');
-                        console.log("arriba: " + $(this).attr('id'));
-                        if(source!=null & target!=null && source!=target){
-                            setEdge(source,target);                                                  
+
+                div.mouseup(function(e) {
+                    if (e.button == 2) {
+                        target = $(this).attr('id');
+                        //  console.log("arriba: " + $(this).attr('id'));
+                        if (source != null & target != null && source != target) {
+                            setEdge(source, target);
                         }
-                        source=target=null;  
-                    }                   
+                        source = target = null;
+                    }
                 });
-                
-            
-                
-                
-                
+
+
+
+
+
                 jsPlumb.draggable(crearIdTopic(id));
                 //jsPlumb.draggable(div2);
-                
+
                 //  div.draggable({handle:'div.topicName'});
-            } 
-            
-            
-            function getInfoTopic(id,tipo){
+            }
+
+
+            function getInfoTopic(id, tipo) {
                 //we load the info of the selected div 
-                if(tipo==1){
-                    var result=$.ajax({
-                        url:'jx_topic.php?option=getNameMinimum&idTopic='+id ,
-                        async:false                       
-                    }).responseText; 
-                   // alert(result);
-                    return result;
-                }else if(tipo==2){
-                    var result=$.ajax({
-                        url:'jx_topic.php?option=getListProblems&idTopic='+id ,
-                        async:false                       
-                    }).responseText;                
+                var info_topic = null;
+                if (tipo == 1) {
+                    $.ajax({
+                        dataType: 'json',
+                        url: 'jx_topic.php?option=getNameMinimum&idTopic=' + id,
+                        async: false,
+                        success: function(data) {
+                            info_topic = data;
+                        }
+                    });
+                    // window.console.log(info_topic);
+                    return info_topic;
+                } else if (tipo == 2) {
+                    var result = $.ajax({
+                        url: 'jx_topic.php?option=getListProblems&idTopic=' + id,
+                        async: false
+                    }).responseText;
                     return result;
                 }
             }
-            
-            function setInfoTopic(id){
-                var result=getInfoTopic(id,1);
-                var value=result.split(",");  
-                // alert(value);
-                $("#"+crearIdTopic(id) + " .topicName").html(value[0] + "("+ value[1] + ")");      
+
+            function setInfoTopic(id) {
+                var result = getInfoTopic(id, 1);
+                //var value = result.split(",");
+                //  window.console.log(result);
+                $("#" + crearIdTopic(id) + " .topicName").html(result.name + " (" + result.number_of_problems + "/" + result.minimum_solved + ")");
             }
-            
-            
-            function loadInfoTopicModal(result){            
+
+
+            function loadInfoTopicModal(result) {
+                //  window.console.log(result);
                 //ponemos los valores en las cajas de texto del Modal Topic
-                var value=result.split(",");
-                $("#name").attr('value',value[0]);
-                $("#ejercicio").attr('value',value[1]);      
-                $("#listaEjercicios").append(getInfoTopic(editing,2));
-                
+                // var value = result.split(",");
+                $("#name").attr('value', result.name);
+                $("#ejercicio").attr('value', result.minimum_solved);
+                $("#listaEjercicios").append(getInfoTopic(editing, 2));
+
                 //  $("#"+crearIdTopic(editing) + " .topicName").html(value[0]);
             }
-            
-     
-            
-            
-            function crearIdTopic(id){
-                return "d"+id;
+
+
+
+
+            function crearIdTopic(id) {
+                return "d" + id;
             }
-            function crearIdListaTopic(id){
-                return "l"+id;
+            function crearIdListaTopic(id) {
+                return "l" + id;
             }
-           
-            
-            function getIdTopic(div){
+
+
+            function getIdTopic(div) {
                 return div.substring(1);
             }
-            
-            
-            function crearDivTopic(id){                
-                var div ="<div id='" + crearIdTopic(id) + "' class='topic'>"
-                    + "<div class='topicName' >"                      
-                    +"</div>"
-                    +"<div class='problems'>"  
-                    +"<div id='"+ crearIdListaTopic(id) +"'>"
-                    +"</div>"
-                    +"</div>"
-                    + "</div>";                
-                return div ;  
-            }    
-            
-            $(document).ready(function(){       
-                console.log("console.log('estoy listo Jquery');");
-                $(document).dblclick(function(e){                   
-                    if(e.pageY>$("#navbar1").height()){
-                        console.log("estoy en dblclick");
-                        if(!onDiv){
+
+
+            function crearDivTopic(id) {
+                var div = "<div id='" + crearIdTopic(id) + "' class='topic'>"
+                        + "<div class='topicName' >"
+                        + "</div>"
+                        + "<div class='problems'>"
+                        + "<div id='" + crearIdListaTopic(id) + "'>"
+                        + "</div>"
+                        + "</div>"
+                        + "</div>";
+                return div;
+            }
+
+            $(document).ready(function() {
+             //   console.log("console.log('estoy listo Jquery');");
+                $(document).dblclick(function(e) {
+                    if (e.pageY > $("#navbar1").height()) {
+                       // console.log("estoy en dblclick");
+                        if (!onDiv) {
                             var result = $.ajax({
-                                url : "jx_graph.php?option=generateIdTopic&posx="+e.pageX+"&posy="+e.pageY,
+                                url: "jx_graph.php?option=generateIdTopic&posx=" + e.pageX + "&posy=" + e.pageY,
                                 async: false
-                            }).responseText                               
+                            }).responseText
                             //     alert("id: " + result + " x: " + e.pageX + " y: " + e.pageY);
-                            crearTopic(result,e.pageX,e.pageY);
+                            crearTopic(result, e.pageX, e.pageY);
                         } else
-                            onDiv=false;
+                            onDiv = false;
                     }
-                });   
-                
-                $(document).keydown(function(e){ //cuando espicha supr
-                    if(e.which==46){ 
-                     //   alert("suor");
-                        if(selectedDiv!=null && confirm("¿Esta seguro que desea eliminar el tema?")){
-                            idTopic = getIdTopic($("#"+selectedDiv).attr("id"));
-                            $("#"+selectedDiv).remove();
-                            selectedDiv=null;
+                });
+
+                $(document).keydown(function(e) { //cuando espicha supr
+                    if (e.which == 46) {
+                        //   alert("suor");
+                        if (selectedDiv != null && confirm("¿Esta seguro que desea eliminar el tema?")) {
+                            idTopic = getIdTopic($("#" + selectedDiv).attr("id"));
+                            $("#" + selectedDiv).remove();
+                            selectedDiv = null;
                             $.ajax({
-                                url:'jx_graph.php?option=delete&id='+idTopic,
-                                async:false
+                                url: 'jx_graph.php?option=delete&id=' + idTopic,
+                                async: false
                             });
                             save(0);
-                            location.href="graph.php";
+                            location.href = "graph.php";
                         }
-                    }                   
+                    }
                 });
-              
-            
+
+
             });
-            
+
             //agregar nuevo problema al div
-            function addProblemDiv(id,problem){
-                var l="*"+problem+"<br/>";
-                $("#l"+id).append(l);
-                
+            function addProblemDiv(id, problem) {
+                var l = "* " + problem + "<br/>";
+                $("#l" + id).append(l);
+
             }
 
             //funcion que guarda el estado de la matriz
-            function save(modo){
-                $(".topic").each(function(e){
-                    var x=(parseInt($(this).css("left")));
-                    var y=(parseInt($(this).css("top")));
-                    var div=$(this).attr("id");                    
-                    var result=$.ajax({
-                        url: "jx_graph.php?option=editPosition&x="+x+"&y="+y+"&idTopic="+getIdTopic(div),
-                        async:false
+            function save(modo) {
+                $(".topic").each(function(e) {
+                    var x = (parseInt($(this).css("left")));
+                    var y = (parseInt($(this).css("top")));
+                    var div = $(this).attr("id");
+                    var result = $.ajax({
+                        url: "jx_graph.php?option=editPosition&x=" + x + "&y=" + y + "&idTopic=" + getIdTopic(div),
+                        async: false
                     }).responseText;
                     //   alert(result);                    
                 });
-                if(modo==1)
-                alert("Curso Guardado correctamente");
+                if (modo == 1)
+                    alert("Curso Guardado correctamente");
                 $("#save").removeClass("unsave");
                 $("div").removeClass("selected");
-                selectedDiv=null;
-                onDiv=false;
+                selectedDiv = null;
+                onDiv = false;
             }
-        
+
         </script>   
 
 
@@ -372,7 +379,7 @@
         <?php
         #cargamos todos los topics
         // $c = new conector_mysql();
-       // sleep(3);
+        // sleep(3);
         while ($rw = mysql_fetch_array($topics)) {
             $position = $c->getInfoPosition($rw['id_topic'], $current_course);
 
@@ -395,8 +402,8 @@
 //cargamos las conexiones 
         while ($data = mysql_fetch_array($connections)) {
             echo "<script>
-                parent.push(".$data['parent'].");
-                child.push(".$data['child'].");
+                parent.push(" . $data['parent'] . ");
+                child.push(" . $data['child'] . ");
                </script>";
         }
         ?>

@@ -1,5 +1,4 @@
-
-
+<!--grafo para los participantes de un curso-->
 <div class="container">
     <div class="row-fluid">
         <div  id="graph" class="span20">
@@ -12,22 +11,22 @@
 
 
 
-        <script>      
-            var endpoint = {       
-                endpoint:"Dot",            
-                isSource:true,
-                maxConnections:10,          
-                isTarget:true
-                //dropOptions:{ tolerance:"touch" , hoverClass:"dropHover" }
+        <script>
+            var endpoint = {
+                endpoint: "Dot",
+                isSource: true,
+                maxConnections: 10,
+                isTarget: true
+                        //dropOptions:{ tolerance:"touch" , hoverClass:"dropHover" }
             };
-            
-            var parent=[];
-            var child=[];
-                
-            
+
+            var parent = [];
+            var child = [];
+
+
             //JSPLUMB   
-            jsPlumb.bind("ready",function(){
-               // console.log('estoy listo JSPLUMB');
+            jsPlumb.bind("ready", function() {
+                // console.log('estoy listo JSPLUMB');
                 jsPlumb.setRenderMode(jsPlumb.SVG);
 //                jsPlumb.bind("click",function(w){
 //                    if(confirm("Desea eliminar la conexion?")){
@@ -45,211 +44,225 @@
 //                    }
 //                });
                 jsPlumb.Defaults.Anchors = ["TopCenter", "TopCenter"];
-                
-                jsPlumb.Defaults.DragOptions = { cursor: 'wait', zIndex:20 };
-                jsPlumb.Defaults.Connector = [ "Straight" ];     
-                jsPlumb.Defaults.Overlays =  [ "Arrow"  ] 
-                jsPlumb.Defaults.Endpoints = [ [ "Dot", 1 ], [ "Dot", 2 ] ]
+
+                jsPlumb.Defaults.DragOptions = {cursor: 'wait', zIndex: 20};
+                jsPlumb.Defaults.Connector = ["Straight"];
+                jsPlumb.Defaults.Overlays = ["Arrow"]
+                jsPlumb.Defaults.Endpoints = [["Dot", 1], ["Dot", 2]]
                 jsPlumb.Defaults.PaintStyle = {
-                    lineWidth:5,
+                    lineWidth: 5,
                     strokeStyle: 'rgba(200,0,0,100)'
                 };
-                
-                
+
+
                 loadConnections();
             });
-            
-            
-            function loadConnections(){
-                for(i=0;i<parent.length;i++){
-                    conectar(crearIdTopic(parent[i]),crearIdTopic(child[i]));
+
+
+            function loadConnections() {
+                for (i = 0; i < parent.length; i++) {
+                    conectar(crearIdTopic(parent[i]), crearIdTopic(child[i]));
                 }
             }
-                      
-            function setEdge(div1,div2){   
-               // console.log("--"  + div1);
+
+            function setEdge(div1, div2) {
+                // console.log("--"  + div1);
                 //insertemos en la base de datos
-                if(isValidConnection(div1,div2)){
-                    conectar(div1,div2);
-                    
-                }else{
+                if (isValidConnection(div1, div2)) {
+                    conectar(div1, div2);
+
+                } else {
                     alert("La conexíon no es válida");
-                }               
+                }
             }
-            
-            function conectar(div1,div2){     
+
+            function conectar(div1, div2) {
                 //console.log(endpoint);
                 //console.log(div1  + " --- " + div2);                
                 var e1 = jsPlumb.addEndpoint(div1, endpoint);
                 //console.log("termino1");                  
-                var e2 = jsPlumb.addEndpoint(div2, endpoint);   
+                var e2 = jsPlumb.addEndpoint(div2, endpoint);
                 //console.log("termino2");
-                jsPlumb.connect({ source:e1, target:e2, paintStyle:{strokeStyle:"gray", lineWidth:2} , overlays: [
-                        [ "Arrow", { foldback:0.9 } ]    
-                    ]}); 
-             //   console.log("termino3");
+                jsPlumb.connect({source: e1, target: e2, paintStyle: {strokeStyle: "gray", lineWidth: 2}, overlays: [
+                        ["Arrow", {foldback: 0.9}]
+                    ]});
+                //   console.log("termino3");
             }
-            
-           
-            function isValidConnection(div1,div2){
-                var result=$.ajax({
-                    url:"jx_topic.php?option=connect&parent="+getIdTopic(div1)+"&child="+getIdTopic(div2),
-                    async:false
+
+
+            function isValidConnection(div1, div2) {
+                var result = $.ajax({
+                    url: "jx_topic.php?option=connect&parent=" + getIdTopic(div1) + "&child=" + getIdTopic(div2),
+                    async: false
                 }).responseText;
-                
-                if(result=="ok")return true;
-                return false;   
+
+                if (result == "ok")
+                    return true;
+                return false;
             }
-            
-                      
-            
-           
-           
+
+
+
+
+
             //FUNCIONES DEL GRAFO
             //funcion que se encarga de crear un nuevo topic
-            function crearTopic(id,x,y){
+            function crearTopic(id, x, y) {
                 //      alert("id: "+  id + " x: " + x + " y: " + y);
-                console.log(x + " " + y);
-                var x=Math.round(x);
-                var y=Math.round(y);
-                console.log(x + " " + y);
+               // console.log(x + " " + y);
+                var x = Math.round(x);
+                var y = Math.round(y);
+               // console.log(x + " " + y);
                 //alert();
-                var div=$(crearDivTopic(id));
-                div.css({"top":y,"left":x});
-                if(isBloqueado(id)){
+                var div = $(crearDivTopic(id));
+                div.css({"top": y, "left": x});
+                if (isBloqueado(id)) {
                     div.addClass('bloqueado');
                 }
                 $("#graph").append(div);
-                
-             //    jsPlumb.draggable(crearIdTopic(id));
-                            
-            } 
-            
+
+                //    jsPlumb.draggable(crearIdTopic(id));
+
+            }
+
             //funcion que dice si un topic esta bloqueado o no
-            function isBloqueado(id){
-                var result=$.ajax({
-                    url:"jx_topic.php?option=isLocked&idTopic="+id,
-                    async:false
+            function isBloqueado(id) {
+                var result = $.ajax({
+                    url: "jx_topic.php?option=isLocked&idTopic=" + id,
+                    async: false
                 }).responseText;
                 //   alert(result);
-               
-                if(result=="true"){
-                    return true;  
+
+                if (result == "true") {
+                    return true;
                 }
             }
-            
-            
-            function getInfoTopic(id,tipo){
-               
+
+
+            function getInfoTopic(id, tipo) {
+
                 //we load the info of the selected div 
-                if(tipo==1){
-                    var result=$.ajax({
-                        url:'jx_topic.php?option=getNameMinimum&idTopic='+id ,
-                        async:false                       
+                var info_topic = null
+                if (tipo == 1) {
+                
+
+                    $.ajax({
+                        dataType: 'json',
+                        url: 'jx_topic.php?option=getNameMinimum&idTopic=' + id,
+                        async: false,
+                        success: function(result) {
+                            //window.console.log(result);
+                            info_topic = result;
+                        }
+                    });
+                   // window.console.log(info_topic);
+                    return info_topic;
+                } else if (tipo == 2) {
+                    var result = $.ajax({
+                        url: 'jx_topic.php?option=getListProblems&idTopic=' + id,
+                        async: false
                     }).responseText;
-                    
-                    return result;
-                }else if(tipo==2){                    
-                    var result=$.ajax({
-                        url:'jx_topic.php?option=getListProblems&idTopic='+id ,
-                        async:false                       
-                    }).responseText;                  
                     return result;
                 }
             }
-            
-            function setInfoTopic(id){
-                var result=getInfoTopic(id,1);
-                var value=result.split(",");  
-                // alert(value);
-                $("#"+crearIdTopic(id) + " .topicName").html("<u style='font-size:20px;'>"+value[0] +"</u> <br> ("+ value[1] + "");      
-            }
-            
-            
-            function loadInfoTopicModal(result){            
-                //ponemos los valores en las cajas de texto del Modal Topic
-                var value=result.split(",");
-                $("#name").attr('value',value[0]);
-                $("#ejercicio").attr('value',value[1]);   
-               
-                $("#listaEjercicios").append(getInfoTopic(editing,2));
+
+            function setInfoTopic(id) {
+                var result = getInfoTopic(id, 1);
                 
+              //  var value = result.split(",");
+
+                // alert(value);
+                
+                
+                
+                $("#" + crearIdTopic(id) + " .topicName").html("<u style='font-size:20px;'>" + result.name + "</u><br> (" + result.number_solved_problems + "/" + result.number_of_problems+ ") Desbloquear con:"+ result.minimum_solved);
+            }
+
+
+            function loadInfoTopicModal(result) {
+                //ponemos los valores en las cajas de texto del Modal Topic
+                var value = result.split(",");
+                $("#name").attr('value', value[0]);
+                $("#ejercicio").attr('value', value[1]);
+
+                $("#listaEjercicios").append(getInfoTopic(editing, 2));
+
                 //  $("#"+crearIdTopic(editing) + " .topicName").html(value[0]);
             }
-            
-     
-            
-            
-            function crearIdTopic(id){
-                return "d"+id;
+
+
+
+
+            function crearIdTopic(id) {
+                return "d" + id;
             }
-            function crearIdListaTopic(id){
-                return "l"+id;
+            function crearIdListaTopic(id) {
+                return "l" + id;
             }
-           
-            
-            function getIdTopic(div){
+
+
+            function getIdTopic(div) {
                 return div.substring(1);
             }
-            
-            
-            function crearDivTopic(id){                
-                var div ="<div id='" + crearIdTopic(id) + "' class='topic'>"
-                    + "<div class='topicName' >"                      
-                    +"</div>"
-                    +"<div class='problems'>"  
-                    +"<div id='"+ crearIdListaTopic(id) +"'>"
-                    +"</div>"
-                    +"</div>"
-                    + "</div>";                
-                return div ;  
-            }    
-            
-            $(document).ready(function(){
-                $(document).dblclick(function(e){                   
-                    if(e.pageY>$("#navbar1").height()){                        
-                        if(!onDiv){
-                            var result = $.ajax({
-                                url : "jx_graph.php?option=generateIdTopic&posx="+e.pageX+"&posy="+e.pageY,
-                                async: false
-                            }).responseText                               
-                            //     alert("id: " + result + " x: " + e.pageX + " y: " + e.pageY);
-                            crearTopic(result,e.pageX,e.pageY);
-                        } else
-                            onDiv=false;
-                    }
-                });             
-            });
-            
-            //agregar nuevo problema al div
-            function addProblemDiv(id,code,problem){
-                var div=$("#"+crearIdTopic(id));
-                 if(div.hasClass('bloqueado')){
-                     //alert("esta bloqueado" + div.attr('id'));
-                 }else{
-                //   alert(code);
-                //lo ponemos verde si ya esta solucionado
-                var result=$.ajax({
-                    url:"jx_problem.php?option=isSolved&idProblem="+code,
-                    async:false
-                }).responseText
 
-                if(result=="false"){
-                  //alert("no");
-                    var l="*"+problem+" ("+code+")<br>";
-                    $("#l"+id).append(l);
-                }else{
-                    //  alert("si");
-                    var l="<li style='background-color:#19AC19'>"+problem+" ("+code+")</li>";
-                    $("#l"+id).append(l);  
-                }
-               
+
+            function crearDivTopic(id) {
+                var div = "<div id='" + crearIdTopic(id) + "' class='topic'>"
+                        + "<div class='topicName' >"
+                        + "</div>"
+                        + "<div class='problems'>"
+                        + "<div id='" + crearIdListaTopic(id) + "'>"
+                        + "</div>"
+                        + "</div>"
+                        + "</div>";
+                return div;
             }
-                
-                
-                             
-            }          
-        
+
+            $(document).ready(function() {
+                $(document).dblclick(function(e) {
+                    if (e.pageY > $("#navbar1").height()) {
+                        if (!onDiv) {
+                            var result = $.ajax({
+                                url: "jx_graph.php?option=generateIdTopic&posx=" + e.pageX + "&posy=" + e.pageY,
+                                async: false
+                            }).responseText
+                            //     alert("id: " + result + " x: " + e.pageX + " y: " + e.pageY);
+                            crearTopic(result, e.pageX, e.pageY);
+                        } else
+                            onDiv = false;
+                    }
+                });
+            });
+
+            //agregar nuevo problema al div
+            function addProblemDiv(id, code, problem) {
+                var div = $("#" + crearIdTopic(id));
+                if (div.hasClass('bloqueado')) {
+                    //alert("esta bloqueado" + div.attr('id'));
+                } else {
+                    //   alert(code);
+                    //lo ponemos verde si ya esta solucionado
+                    var result = $.ajax({
+                        url: "jx_problem.php?option=isSolved&idProblem=" + code,
+                        async: false
+                    }).responseText
+
+                    if (result == "false") {
+                        //alert("no");
+                        var l = "* " + problem + " (" + code + ")<br>";
+                        $("#l" + id).append(l);
+                    } else {
+                        //  alert("si");
+                        var l = "<li style='background-color:#19AC19'>" + problem + " (" + code + ")</li>";
+                        $("#l" + id).append(l);
+                    }
+
+                }
+
+
+
+            }
+
         </script>
         <style>
 
@@ -359,10 +372,3 @@
         }
         ?>
             
-
-
-
-
-
-
-

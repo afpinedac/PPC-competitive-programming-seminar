@@ -349,18 +349,18 @@ WHERE participant.id_user=solved.id_user AND solved.id_problem=problem.id_proble
 
     //funcion que retorna los recursos
     function getRecursos($curso) {
-        $query = "SELECT * FROM resource WHERE id_course='$curso'";
+        $query = "SELECT r.url,u.username,r.description,r.id_resource,r.id_user FROM resource r,user u WHERE u.id_user=r.id_user AND r.id_course='$curso'";
         return $this->realizarConsulta($query);
     }
 
     //funcioon que crea un recurso
     function crearRecurso($curso, $data) {
-        $query = "INSERT INTO resource(id_course,url,description) VALUES('$curso','{$data['url']}','{$data['description']}')";
+        $query = "INSERT INTO resource(id_course,url,description,id_user) VALUES('$curso','{$data['url']}','{$data['description']}','{$data['id_user']}')";
         $this->realizarConsulta($query);
     }
 
     function getRankingCurso($curso) {
-        $query = "SELECT username,count(distinct(problem.id_problem)) AS c
+        $query = "SELECT user.id_user,username,count(distinct(problem.id_problem)) AS c
 FROM ((user NATURAL JOIN participant) LEFT JOIN solved ON (user.id_user=solved.id_user)) LEFT JOIN problem ON(problem.id_problem=solved.id_problem)
 GROUP BY username
 ORDER BY c DESC
@@ -368,6 +368,11 @@ ORDER BY c DESC
         //  echo $query;
         $result = $this->realizarConsulta($query);
         return $result;
+    }
+    
+    function eliminarRecurso($data){
+        $query = "DELETE FROM resource  WHERE id_resource = '{$data['id_resource']}' AND id_user = '{$data['id_user']}'";
+       $this->realizarConsulta($query);
     }
 
     //funciones utiles

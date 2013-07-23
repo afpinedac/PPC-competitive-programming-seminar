@@ -3,7 +3,7 @@
     <head>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
-        <script type="text/javascript" src="vista/jsPlumb/jquery.jsPlumb-1.3.16-all-min.js"></script>
+        <script type="text/javascript" src="./public/libs/jsPlumb/jquery.jsPlumb-1.3.16-all-min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">      
         <link href="./public/libs/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
         <link href="./public/libs/bootstrap/css/micss.css" rel="stylesheet">

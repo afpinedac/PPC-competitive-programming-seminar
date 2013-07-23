@@ -10,19 +10,19 @@
             </a>
 
             <!-- Be sure to leave the brand out there if you want it shown -->
-            <a class="brand" href="modulo.php"><?php echo strtoupper($COURSE_NAME) ?></a>
+            <a class="brand" href="modulo.php"><i class='icon icon-star'></i> <?php echo strtoupper($COURSE_NAME) ?></a>
 
             <!-- Everything you want hidden at 940px or less, place within here -->
             <div class="nav-collapse collapse navbar-responsive-collapse">
                 <!-- .nav, .navbar-search, .navbar-form, etc -->
                 <ul class="nav">
                     <li >
-                        <a href="modulo.php?option=verRecursos">Recursos</a>
+                        <a href="modulo.php?option=verRecursos"><i class='icon-folder-open icon'></i> Recursos</a>
                     </li>
                     <li> <a href="http://uhunt.felix-halim.net/id/<?php echo $info['uva_id']; ?>" target="_blank"> Mi UVA</a><li>
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Información
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class='icon icon-th'></i> Información
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
@@ -35,15 +35,15 @@
                     </li>    
                 </ul>  
                 <ul class="nav pull-right">
-                    <li> <a href="curso.php"> Regresar </a><li>
+                    <li> <a href="curso.php"><i class='icon icon-share-alt'></i> Regresar </a><li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i><?php echo ' ' . $_SESSION['user']['name'] ?>
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                            <li> <a href="curso.php?option=editarInformacion">Editar Información</a><li>
+                            <li> <a href="curso.php?option=editarInformacion"><i class='icon icon-edit'></i> Editar Información</a><li>
                             <li class="divider"></li>   
-                            <li> <a href="curso.php?option=logout">Salir</a><li>
+                            <li> <a href="curso.php?option=logout"><i class='icon icon-off'></i> Salir</a><li>
 
                         </ul>    
                     </li>   
