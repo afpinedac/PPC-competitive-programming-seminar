@@ -18,6 +18,7 @@
                         <span class='x span3 pull-left'>Universidad:</span>  <input class="span9 pull-right" placeholder="universidad" type="text"  value='<?php echo $data['universidad'] ?>' name="university">
 
                         <input type="hidden" name="id_user" value="<?php echo $data['id_user'] ?>" />
+                        <br>
                         <button onclick="return validar();" class="btn-info btn btn-block" type="submit">Actualizar</button>      
                     </form>    
                 </div>

@@ -34,7 +34,7 @@ class ws {
     static function getInfoProblem($id, $data) {
         $info = ws::getText("http://uhunt.felix-halim.net/api/p/num/" . $id);
         $info = json_decode($info);
-        return $info->{$data};
+        return isset($info->{$data}) ? $info->{$data} : NULL;
     }
 
     static function getInfoProblem2($id, $data) {

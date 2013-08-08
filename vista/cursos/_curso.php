@@ -16,9 +16,9 @@
             <div class="nav-collapse collapse navbar-responsive-collapse">
                 <!-- .nav, .navbar-search, .navbar-form, etc -->
                 <ul class="nav">
-                    <li class=>
+                    <!--<li class=>
                         <a href="http://unalmed.3eeweb.com/uva/" target="_blank"><i class='icon-list-alt'></i> Ranking Unalmed</a>
-                    </li>
+                    </li>-->
 
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class='icon-book'></i> Cursos

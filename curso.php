@@ -26,7 +26,7 @@ if (isset($_SESSION['user']['username'])) {
             session_destroy();
             echo "<script>location.href='index.php'</script>";
             // header("Location:index.php");
-        } else if ($option == "validarCodigo") {
+        } else if ($option == "validarCodigo" && isset($_POST['codigo'])) {
             if ($idCurso = $c->validarCodigo($codigo, $current_user)) {
                 $c->registrarParticipante($current_user, $idCurso);
                 mostrarCursos();
@@ -59,8 +59,8 @@ if (isset($_SESSION['user']['username'])) {
                 require("./vista/templates/_message.php");
                 require("./vista/cursos/_crearCurso.php");
             }
-        } else if ($option == "eliminarCursoCreado" && $current_user_rol == 1) {
-            $c->eliminarCursoCreado($idCurso);
+        } else if ($option == "eliminarCursoCreado" && $current_user_rol == 1) {            
+            $c->eliminarCursoCreado($idCurso,$current_user);
             mostrarCursos();
         } else if ($option == "editarCursoCreado" && $current_user_rol == 1) {
             //  var_dump($_GET);
@@ -90,6 +90,8 @@ if (isset($_SESSION['user']['username'])) {
             $c->realizarConsulta($query);
             echo "<script>alert('La información fue actualizada correctamente')</script>";
             echo "<script>location.href='curso.php?option=editarInformacion'</script>";
+        }else{
+              echo "<script>location.href='curso.php'</script>";
         }
     } else {
         mostrarCursos();

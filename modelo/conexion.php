@@ -16,28 +16,28 @@ class conector_mysql {
         return self::$instance;
     }
 
-//    function __construct() {
-//        $this->host = 'localhost';
-//        $this->bd = 'ppc';
-//       //  $this->puerto = 5432;
-//        $this->usuario = 'root';
-//        $this->password = 'M8A311';
-//        $link = mysql_connect($this->host, $this->usuario, $this->password ) or die("No se pudo conectar");
-//        mysql_selectdb($this->bd, $link);
-//        $this->link = $link;
-//    }
-
-
     function __construct() {
         $this->host = 'localhost';
-        $this->bd = 'graph';
-        //  $this->puerto = 5432;
+        $this->bd = 'ppc';
+       //  $this->puerto = 5432;
         $this->usuario = 'root';
-        $this->password = '';
-        $link = mysql_connect($this->host, $this->usuario, $this->password) or die("No se pudo conectar");
+        $this->password = 'M8A311';
+        $link = mysql_connect($this->host, $this->usuario, $this->password ) or die("No se pudo conectar");
         mysql_selectdb($this->bd, $link);
         $this->link = $link;
     }
+
+
+//    function __construct() {
+//        $this->host = 'localhost';
+//        $this->bd = 'ppc';
+//        //  $this->puerto = 5432;
+//        $this->usuario = 'root';
+//        $this->password = '';
+//        $link = mysql_connect($this->host, $this->usuario, $this->password) or die("No se pudo conectar");
+//        mysql_selectdb($this->bd, $link);
+//        $this->link = $link;
+//    }
 
     //FUNCIONES DE LOGIN
     //funcion que verifica si un usuario se puede loguear
@@ -129,11 +129,11 @@ class conector_mysql {
         }
     }
 
-    function eliminarCursoCreado($curso) {
+    function eliminarCursoCreado($curso, $user) {
         //eliminamos primero en participante
-        $query = "DELETE FROM participant WHERE id_course='$curso'";
+        $query = "DELETE FROM participant WHERE id_course='$curso' and id_user='$user'";
         $this->realizarConsulta($query);
-        $query = "DELETE FROM course WHERE id_course='$curso'";
+        $query = "DELETE FROM course WHERE id_course='$curso' and id_user='$user'";
         $this->realizarConsulta($query);
     }
 
@@ -279,7 +279,7 @@ class conector_mysql {
     function getProblemsSolvedCourse($idUser, $idCurso) {
         $query = "SELECT count(distinct(solved.id_problem))
 FROM participant,solved,problem
-WHERE participant.id_user=solved.id_user AND solved.id_problem=problem.id_problem AND participant.id_user='$idUser' AND participant.id_course='$idCurso'";
+WHERE participant.id_user=solved.id_user AND solved.id_problem=problem.id_problem AND participant.id_user='$idUser' AND participant.id_course='$idCurso'  AND problem.id_course='$idCurso'";
         //echo $query;
         $result = $this->realizarConsulta($query);
         return $this->getOneData($result);
@@ -362,6 +362,7 @@ WHERE participant.id_user=solved.id_user AND solved.id_problem=problem.id_proble
     function getRankingCurso($curso) {
         $query = "SELECT user.id_user,username,count(distinct(problem.id_problem)) AS c
 FROM ((user NATURAL JOIN participant) LEFT JOIN solved ON (user.id_user=solved.id_user)) LEFT JOIN problem ON(problem.id_problem=solved.id_problem)
+WHERE participant.id_course = '$curso' AND problem.id_course = '$curso'
 GROUP BY username
 ORDER BY c DESC
 ";
@@ -369,10 +370,10 @@ ORDER BY c DESC
         $result = $this->realizarConsulta($query);
         return $result;
     }
-    
-    function eliminarRecurso($data){
+
+    function eliminarRecurso($data) {
         $query = "DELETE FROM resource  WHERE id_resource = '{$data['id_resource']}' AND id_user = '{$data['id_user']}'";
-       $this->realizarConsulta($query);
+        $this->realizarConsulta($query);
     }
 
     //funciones utiles

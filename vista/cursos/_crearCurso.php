@@ -14,7 +14,7 @@
 
                         <span class='x span4 pull-left'>Nombre del curso:</span>  <input class="span8 pull-right" placeholder="Nombre del curso" required type="text" required name="nombre">
                         <span class='x span4 pull-left'>Código del curso:</span>  <input class="span8 pull-right" placeholder="Código del curso" required type="text" required name="codigo">
-
+                        <br>
                         <button  class="btn-info btn btn-block" type="submit">Crear</button>      
                     </form>    
                 </div>

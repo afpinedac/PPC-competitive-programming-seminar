@@ -109,10 +109,10 @@
             //funcion que se encarga de crear un nuevo topic
             function crearTopic(id, x, y) {
                 //      alert("id: "+  id + " x: " + x + " y: " + y);
-               // console.log(x + " " + y);
+                // console.log(x + " " + y);
                 var x = Math.round(x);
                 var y = Math.round(y);
-               // console.log(x + " " + y);
+                // console.log(x + " " + y);
                 //alert();
                 var div = $(crearDivTopic(id));
                 div.css({"top": y, "left": x});
@@ -144,7 +144,7 @@
                 //we load the info of the selected div 
                 var info_topic = null
                 if (tipo == 1) {
-                
+
 
                     $.ajax({
                         dataType: 'json',
@@ -155,7 +155,7 @@
                             info_topic = result;
                         }
                     });
-                   // window.console.log(info_topic);
+                    // window.console.log(info_topic);
                     return info_topic;
                 } else if (tipo == 2) {
                     var result = $.ajax({
@@ -168,14 +168,14 @@
 
             function setInfoTopic(id) {
                 var result = getInfoTopic(id, 1);
-                
-              //  var value = result.split(",");
+
+                //  var value = result.split(",");
 
                 // alert(value);
-                
-                
-                
-                $("#" + crearIdTopic(id) + " .topicName").html("<u style='font-size:20px;'>" + result.name + "</u><br> (" + result.number_solved_problems + "/" + result.number_of_problems+ ") Desbloquear con:"+ result.minimum_solved);
+
+
+
+                $("#" + crearIdTopic(id) + " .topicName").html("<u style='font-size:20px;'>" + result.name + "</u><br> (" + result.number_solved_problems + "/" + result.number_of_problems + ") Desbloquear con:" + result.minimum_solved);
             }
 
 
@@ -358,7 +358,7 @@
                 $name = $r['name'];
                 echo "<script>
               
-                    addProblemDiv($idTopic,$code,'$name');
+                    addProblemDiv($idTopic,$code,'" . addslashes($name) . "');
                     </script>";
             }
         }
