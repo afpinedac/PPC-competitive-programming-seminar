@@ -235,7 +235,7 @@
             });
 
             //agregar nuevo problema al div
-            function addProblemDiv(id, code, problem) {
+            function addProblemDiv(id, code, problem, level) {
                 var div = $("#" + crearIdTopic(id));
                 if (div.hasClass('bloqueado')) {
                     //alert("esta bloqueado" + div.attr('id'));
@@ -249,11 +249,11 @@
 
                     if (result == "false") {
                         //alert("no");
-                        var l = "* " + problem + " (" + code + ")<br>";
+                        var l = "* " + problem + " (" + code + ") <span style='font-size:8px;'>(* " + level + ")</span><br>";
                         $("#l" + id).append(l);
                     } else {
                         //  alert("si");
-                        var l = "<li style='background-color:#19AC19'>" + problem + " (" + code + ")</li>";
+                        var l = "<li style='background-color:#19AC19'>" + problem + " (" + code + ") <span style='font-size:8px;'>(*" + level + ")</span></li>";
                         $("#l" + id).append(l);
                     }
 
@@ -284,13 +284,14 @@
                 background-position: center center;
                 font-size: 10px;
                 line-height: 12px;
+                overflow-x: visible;
 
                 background-size: 100%;
 
             }
 
             .bloqueado{
-                background-image: url("images/candado.gif");
+                background-image: url("public/img/candado.gif");
             }
 
 
@@ -300,6 +301,7 @@
                 height: auto;
                 min-height: 90px;
                 min-width: 100px;
+               
                 border: 1px solid black; 
                 box-shadow: 2px 2px 19px #aaa;
                 -o-box-shadow: 2px 2px 19px #aaa;
@@ -356,9 +358,10 @@
             while ($r = mysql_fetch_array($problema)) {
                 $code = $r['id_problem'];
                 $name = $r['name'];
+                $level = (float) ($r['level'] / 10000);
                 echo "<script>
               
-                    addProblemDiv($idTopic,$code,'" . addslashes($name) . "');
+                    addProblemDiv($idTopic,$code,'" . addslashes($name) . "',$level);
                     </script>";
             }
         }

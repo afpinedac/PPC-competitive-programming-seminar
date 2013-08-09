@@ -25,20 +25,18 @@ if (isset($_GET['option'])) {
         }
     } elseif ($option == "existUser") {
         $username = $_GET['username'];
-        $result = ws::getIdUser($username);
-        if ($result == "-1") {
+        $result = trim(ws::getIdUser($username));
+        if ($result == "0") {
             echo "false";
         } else {
             $data = $c->getOneData($c->realizarConsulta("SELECT count(*) FROM user WHERE username='$username'"));
-            echo "N: $data";
+            // echo "N: $data";
             if ($data >= 1) {
-                echo "false";
+                echo "already_exists";
             } else {
                 echo "true";
             }
         }
     }
-} else {
-    
 }
 ?>

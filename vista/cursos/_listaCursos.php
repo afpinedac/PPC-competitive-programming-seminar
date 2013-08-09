@@ -65,8 +65,9 @@ function getPosition($course) {
     global $username, $c ;
     $pos = 0;
     $lista = $c->getRankingCurso($course);
+    //var_dump($course);
     while ($data = mysql_fetch_array($lista)) {
-     
+        
         if ($data['username'] == $username) {          
             return ++$pos;
         }

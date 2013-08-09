@@ -69,6 +69,7 @@ function cargarProblemasSolucionados() {
     $user = ws::getIdUser($username);
     $var = ws::getSubmissions($user);
     global $c, $current_user;
+
     foreach ($var as $arr) {
         if ($arr[2] == 90) {
             // $data=ws::getInfoProblem2($arr[1], "num");            

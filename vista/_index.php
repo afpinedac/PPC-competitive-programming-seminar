@@ -9,14 +9,26 @@
             <center> <a class="btn btn-primary" href="index.php?option=registrar">Registrarse</a> </center>
         </div>    
 
-        <br><br><br><br>
+        <br><br><br>
         <footer class="footer">
 
             <div  class="well">
-                <!--<center><span><a href="http://www.colombiansdesign.com" target="_blank">@Colombian'sDesign</a></span></center>-->
-                <center><a href="http://guiame.medellin.unal.edu.co/" target="_blank"><img class="grupo"  src="./public/img/guiame.png"></a></center>
-                <center><p><strong>Grupo de Investigación en informática educativa</strong><p></center>
-                <!--<center><span><br><strong>Contáctenos:</strong> <em>afpinedac@unal.edu.co</em></span></center>-->
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="span4">
+                            <span style='margin-top: 10px;'><br><strong>Dudas, sugerencias, problemas:</strong> <br><em>afpinedac@unal.edu.co</em></span>
+                        </div>
+                        <div class="span4">
+                            <center><a href="http://guiame.medellin.unal.edu.co/" target="_blank"><img class="grupo"  src="./public/img/guiame.png"></a></center>
+                            <center><p><strong>Grupo de Investigación en informática educativa</strong><p></center>
+                        </div>
+                    </div>
+                </div>
+
+
+<!--<center><span><a href="http://www.colombiansdesign.com" target="_blank">@Colombian'sDesign</a></span></center>-->
+
+
 
             </div>
         </footer>
@@ -29,7 +41,7 @@
 <style>
     .masthead h1 {
         margin-top: 60px;
-        font-size: 100px;
+        font-size: 80px;
         line-height: 1;
         letter-spacing: -2px;
     }   

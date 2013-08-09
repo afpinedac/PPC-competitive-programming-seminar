@@ -16,28 +16,28 @@ class conector_mysql {
         return self::$instance;
     }
 
-    function __construct() {
-        $this->host = 'localhost';
-        $this->bd = 'ppc';
-       //  $this->puerto = 5432;
-        $this->usuario = 'root';
-        $this->password = 'M8A311';
-        $link = mysql_connect($this->host, $this->usuario, $this->password ) or die("No se pudo conectar");
-        mysql_selectdb($this->bd, $link);
-        $this->link = $link;
-    }
-
-
 //    function __construct() {
 //        $this->host = 'localhost';
 //        $this->bd = 'ppc';
-//        //  $this->puerto = 5432;
+//       //  $this->puerto = 5432;
 //        $this->usuario = 'root';
-//        $this->password = '';
-//        $link = mysql_connect($this->host, $this->usuario, $this->password) or die("No se pudo conectar");
+//        $this->password = 'M8A311';
+//        $link = mysql_connect($this->host, $this->usuario, $this->password ) or die("No se pudo conectar");
 //        mysql_selectdb($this->bd, $link);
 //        $this->link = $link;
 //    }
+
+
+    function __construct() {
+        $this->host = 'localhost';
+        $this->bd = 'ppc';
+        //  $this->puerto = 5432;
+        $this->usuario = 'root';
+        $this->password = '';
+        $link = mysql_connect($this->host, $this->usuario, $this->password) or die("No se pudo conectar");
+        mysql_selectdb($this->bd, $link);
+        $this->link = $link;
+    }
 
     //FUNCIONES DE LOGIN
     //funcion que verifica si un usuario se puede loguear
@@ -135,6 +135,14 @@ class conector_mysql {
         $this->realizarConsulta($query);
         $query = "DELETE FROM course WHERE id_course='$curso' and id_user='$user'";
         $this->realizarConsulta($query);
+        $query = "DELETE FROM topic WHERE id_course='$curso'";
+        $this->realizarConsulta($query);
+        $query = "DELETE FROM position WHERE id_course='$curso'";
+        $this->realizarConsulta($query);
+        $query = "DELETE FROM sucesor WHERE id_course='$curso'";
+        $this->realizarConsulta($query);
+        $query = "DELETE FROM problem  WHERE id_course='$curso'";
+        $this->realizarConsulta($query);
     }
 
     function editarCurso($id, $name, $code) {
@@ -158,15 +166,21 @@ class conector_mysql {
     function generateIdTopic($course, $x, $y) {
         $query = "SELECT coalesce(max(id_topic),0) + 1 FROM topic WHERE id_course='$course'";
         $last = $this->getOneData($this->realizarConsulta($query));
-        $query = "INSERT INTO topic (id_topic,id_course,name,minimum_solved) VALUES('$last','$course','Nombre','0')";
+        $query = "INSERT INTO topic(id_topic,id_course,name,minimum_solved) VALUES('$last','$course','Nombre','0')";
         $this->realizarConsulta($query);
-        $query = "INSERT INTO position (id_topic,id_course,x,y) VALUES('$last','$course','$x','$y')";
+        $query = "INSERT INTO position VALUES('$last','$course','$x','$y')";
         $this->realizarConsulta($query);
         return $last;
     }
 
     function eliminarTopic($id, $curso) {
         $query = "DELETE FROM topic WHERE id_topic='$id' AND id_course='$curso'";
+        $this->realizarConsulta($query);
+        $query = "DELETE FROM position WHERE id_topic='$id' AND id_course='$curso'";
+        $this->realizarConsulta($query);
+        $query = "DELETE FROM sucesor WHERE id_course='$curso' AND ( parent = '$id'  or child = '$id' ) ";
+        $this->realizarConsulta($query);
+        $query = "DELETE FROM problem  WHERE id_course='$curso' AND id_topic = '$id'";
         $this->realizarConsulta($query);
     }
 
@@ -232,7 +246,7 @@ class conector_mysql {
     }
 
     function getAllProblemas($idCourse, $idTopic) {
-        $query = "SELECT * FROM problem WHERE id_course='$idCourse' AND id_topic='$idTopic'";
+        $query = "SELECT problem.id_problem,problem.name,uva_problems.level FROM problem,uva_problems  WHERE n_problem = problem.id_problem  AND  id_course='$idCourse' AND id_topic='$idTopic' ORDER BY level desc";
         return $this->realizarConsulta($query);
     }
 
