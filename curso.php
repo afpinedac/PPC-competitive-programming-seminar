@@ -40,7 +40,6 @@ if (isset($_SESSION['user']['username'])) {
             require("./vista/cursos/_inscribirCurso.php");
         } else if ($option == "crearNuevo" && $current_user_rol == 1) {
             require("./vista/cursos/_crearCurso.php");
-           
         } else if ($option == "eliminar") {
             $c->eliminarParticipante($current_user, $idCurso);
             mostrarCursos();
@@ -59,8 +58,8 @@ if (isset($_SESSION['user']['username'])) {
                 require("./vista/templates/_message.php");
                 require("./vista/cursos/_crearCurso.php");
             }
-        } else if ($option == "eliminarCursoCreado" && $current_user_rol == 1) {            
-            $c->eliminarCursoCreado($idCurso,$current_user);
+        } else if ($option == "eliminarCursoCreado" && $current_user_rol == 1) {
+            $c->eliminarCursoCreado($idCurso, $current_user);
             mostrarCursos();
         } else if ($option == "editarCursoCreado" && $current_user_rol == 1) {
             //  var_dump($_GET);
@@ -90,8 +89,42 @@ if (isset($_SESSION['user']['username'])) {
             $c->realizarConsulta($query);
             echo "<script>alert('La información fue actualizada correctamente')</script>";
             echo "<script>location.href='curso.php?option=editarInformacion'</script>";
-        }else{
-              echo "<script>location.href='curso.php'</script>";
+        } else if ($option == "administrar" && isset($_GET['idCurso'])) {
+
+            if (is_owner($_SESSION['user']['idUser'], $idCurso)) {
+
+
+                //get all participants
+                $users = $c->get_all_participants($idCurso);
+
+                $data = array();
+                if (isset($idUser)) {
+                    $user = $c->getInfoUser($idUser);
+                    $_data['user']['nombre'] = $c->getOneField($user, 'name');
+                    $_data['user']['apellido'] = $c->getOneField($user, 'lastName');
+                    $_data['user']['username'] = $c->getOneField($user, 'username');
+                    $_data['user']['topics'] = $c->getAllTopics($idCurso); //$c->get_number_of_exercises_solved_by_topic($idUser, $idCurso);
+                    $_data['user']['subs'] = get_submissions($idUser, $idCurso, $_data['user']['username']);
+
+                    // var_dump($_data['user']['subs']);
+                } else {
+
+                    $course = $c->getInfoCurso($idCurso);
+                    $_data['curso']['nombre'] = $c->getOneField($course, 'name');
+                    $_data['curso']['codigo'] = $c->getOneField($course, 'registration_code');
+                    $_data['curso']['fecha_creacion'] = $c->getOneField($course, 'creation_date');
+                    $_data['curso']['numero_estudiantes'] = $c->getNumeroEstudiantes($idCurso);
+                    $_data['curso']['numero_temas'] = $c->getNumeroTemas($idCurso);
+                    $_data['curso']['numero_ejercicios'] = 0;
+                }
+
+
+                require './vista/cursos/_administrarCurso.php';
+            } else {
+                echo "<script>location.href='curso.php'</script>";
+            }
+        } else {
+            echo "<script>location.href='curso.php'</script>";
         }
     } else {
         mostrarCursos();
@@ -118,6 +151,9 @@ function mostrarCursos() {
 
     if ($current_user_rol == 1) {
         if ($cursos = $c->getMyCursosCreados($current_user)) {
+
+
+
             require("./vista/cursos/_listarCursosCreados.php");
         } else {
             $data['tipo'] = "error";
@@ -125,6 +161,74 @@ function mostrarCursos() {
             require("./vista/templates/_message.php");
         }
     }
+}
+
+//checks if a user is owner of a course
+function is_owner($user, $course) {
+    global $c;
+    $count = $c->get_is_owner($user, $course);
+    return $count == 1 ? true : false;
+}
+
+function get_submissions($user, $course, $username) {
+    global $c;
+
+    $subs = ws::getSubmissions(ws::getIdUser($username));
+    //var_dump($subs);
+
+    $solve = $c->get_problems_to_solve($user, $course);
+
+    $arr_solve = array();
+
+    while ($row = mysql_fetch_array($solve)) {
+        $arr_solve[] = $row['id_problem'];
+    }
+
+    $arr_solve = mapear_problemas($arr_solve);
+
+    $response = array();
+
+
+    foreach ($arr_solve as $solve) {
+        foreach ($subs as $sub) {
+            if ($sub[1] == $solve) {
+                $response[] = $sub;
+            }
+        }
+    }
+
+    $data2 = array();
+    $i = 0;
+
+    foreach ($response as $sub) {
+
+        $data['problem'] = $c->getOneData($c->getInfoUVAProblem($sub[1]), 'title');
+        $data['topic'] = 'topic1';
+        $data['fecha'] = date('d-m-Y H:i:s', $sub[4]);
+        $data['resultado'] = ws::getVerdictID($sub[2]);
+        $data2[$i++] = $data;
+    }
+    return $data2;
+}
+
+function mapear_problemas($to_solve) {
+    global $c;
+    $lista = "";
+    foreach ($to_solve as $value) {
+        $lista.= ",$value";
+    }
+    //echo "$lista";
+    $lista = "(" . substr($lista, 1) . ")";
+
+    $query = "SELECT id_problem from uva_problems WHERE n_problem in $lista";
+    $result = $c->realizarConsulta($query);
+
+    $values = array();
+
+    while ($row = mysql_fetch_array($result)) {
+        $values[] = $row['id_problem'];
+    }
+    return $values;
 }
 
 ?>

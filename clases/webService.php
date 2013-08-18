@@ -43,6 +43,47 @@ class ws {
         return $info->{$data};
     }
 
+    static function getVerdictID($verdict) {
+        switch ($verdict) {
+            case 10:
+                return 'Submission error';
+                break;
+            case 15:
+                return 'Can\'t be judged';
+                break;
+            case 20:
+                return 'In queue';
+                break;
+            case 30:
+                return ' Compile error';
+                break;
+            case 35:
+                return 'Restricted function';
+                break;
+            case 40:
+                return 'Runtime error';
+                break;
+            case 45:
+                return 'Output limit';
+                break;
+            case 50:
+                return 'Time limit';
+                break;
+            case 60:
+                return 'Memory limit';
+                break;
+            case 70:
+                return 'Wrong answer';
+                break;
+            case 80:
+                return 'PresentationE';
+                break;
+            case 90:
+                return 'Accepted';
+                break;
+        }
+    }
+
 }
 
 ?>

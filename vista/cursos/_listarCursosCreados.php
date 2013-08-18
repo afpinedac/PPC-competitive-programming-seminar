@@ -14,6 +14,7 @@
                 <th># de Temas</th>   
                 <th># de problemas</th>   
                 <th>Fecha de creación</th>              
+                <th>Administar</th>              
                 <th>Editar</td>
                 <th>Eliminar</td>
                     </thead>    
@@ -34,6 +35,7 @@
                             <td><center><?php echo $c->getNumeroTemas($data['id_course']) ?></center></td>  
                             <td><center><?php echo $c->getNumeroProblemas($data['id_course']) ?></center></td>  
                             <td><center><?php echo $c->getOneField($c->getInfoCurso($data['id_course']), 'creation_date') ?></center></td>     
+            <td><center><a class='btn btn-primary btn-small'  href='curso.php?option=administrar&idCurso=<?php echo $data['id_course'] ?>'><i class='icon icon-share icon-white'></i >Administrar</a></center></td>     
                             <td><center><a href='curso.php?option=editarCurso&idCurso=<?php echo $data['id_course'] ?>' class='btn btn-info btn-small'><i class='icon-edit icon-white'></i> Editar</a></center></td>
             <td><center><a  onclick="return confirm('¿Está seguro de eliminar este curso?')" href='curso.php?option=eliminarCursoCreado&idCurso=<?php echo $data['id_course'] ?>' class='btn btn-danger btn-small'><i class='icon-remove icon-white'></i> Eliminar</a></center></td></tr>
 

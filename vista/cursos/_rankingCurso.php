@@ -14,16 +14,22 @@
                 </thead>
                 <tbody>
 
+
+
+
+
+
+
                     <?php
                     $pos = 1;
                     while ($rw = mysql_fetch_array($result)) {
-                       
+                        //    var_dump($rw);
                         $done = $c->getProblemsSolvedCourse($current_user, $data['id_course']);
                         $total = $c->getNumeroProblemas($data['id_course']);
                         ?>
-                        <tr class='<?php if($current_user==$rw['id_user']) echo 'success' ?>'>
-                             <td width='10%'><center><?php echo ($pos++) ?></center></td>                
-                    <td width='45%'><center><?php echo $rw[0] ?></center></td>           
+                        <tr class='<?php if ($current_user == $rw['id_user']) echo 'success' ?>'>
+                            <td width='10%'><center><?php echo ($pos++) ?></center></td>                
+                    <td width='45%'><center><?php echo $rw[1] ?></center></td>           
                     <td><center><?php echo $rw['c'] ?></center></td>  
 
                     <?php

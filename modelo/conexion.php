@@ -16,18 +16,6 @@ class conector_mysql {
         return self::$instance;
     }
 
-//    function __construct() {
-//        $this->host = 'localhost';
-//        $this->bd = 'ppc';
-//       //  $this->puerto = 5432;
-//        $this->usuario = 'root';
-//        $this->password = 'M8A311';
-//        $link = mysql_connect($this->host, $this->usuario, $this->password ) or die("No se pudo conectar");
-//        mysql_selectdb($this->bd, $link);
-//        $this->link = $link;
-//    }
-
-
     function __construct() {
         $this->host = 'localhost';
         $this->bd = 'ppc';
@@ -39,6 +27,17 @@ class conector_mysql {
         $this->link = $link;
     }
 
+//
+//    function __construct() {
+//        $this->host = 'localhost';
+//        $this->bd = 'ppc';
+//        //  $this->puerto = 5432;
+//        $this->usuario = 'root';
+//        $this->password = '';
+//        $link = mysql_connect($this->host, $this->usuario, $this->password) or die("No se pudo conectar");
+//        mysql_selectdb($this->bd, $link);
+//        $this->link = $link;
+//    }
     //FUNCIONES DE LOGIN
     //funcion que verifica si un usuario se puede loguear
     function checkLogin($user, $pass) {
@@ -151,9 +150,15 @@ class conector_mysql {
         $this->realizarConsulta($query);
     }
 
+    function get_all_participants($course) {
+        $query = "SELECT * FROM participant p ,user u  WHERE p.id_course='$course' AND u.id_user = p.id_user ORDER BY u.username";
+        return $this->realizarConsulta($query);
+    }
+
     //TOPIC 
     function getInfoTopic($idTopic, $idCourse) {
         $query = "SELECT * FROM topic WHERE id_topic='$idTopic' AND id_course='$idCourse'";
+      //  echo $query;
         return $this->realizarConsulta($query);
     }
 
@@ -246,7 +251,7 @@ class conector_mysql {
     }
 
     function getAllProblemas($idCourse, $idTopic) {
-        $query = "SELECT problem.id_problem,problem.name,uva_problems.level FROM problem,uva_problems  WHERE n_problem = problem.id_problem  AND  id_course='$idCourse' AND id_topic='$idTopic' ORDER BY level desc";
+        $query = "SELECT problem.id_problem,problem.name,uva_problems.level,uva_problems.id_problem as n_problem FROM problem,uva_problems  WHERE n_problem = problem.id_problem  AND  id_course='$idCourse' AND id_topic='$idTopic' ORDER BY level desc";
         return $this->realizarConsulta($query);
     }
 
@@ -261,6 +266,11 @@ class conector_mysql {
         return $this->getOneData($result);
     }
 
+    function getInfoUVAProblem($problem) {
+        $query = "SELECT title FROM uva_problems WHERE id_problem = '$problem'";
+        return $this->realizarConsulta($query);
+    }
+
     function getNumberOfProblemsSolved($user, $curso, $topic) {
         $query = "SELECT count(*) FROM problem WHERE id_course='$curso' AND id_topic='$topic' AND id_problem IN (SELECT id_problem FROM solved WHERE id_user='$user')";
         //echo $query;
@@ -272,6 +282,11 @@ class conector_mysql {
         $query = "SELECT count(*) FROM  problem WHERE id_course='$curso' AND id_topic='$topic'";
         $result = $this->realizarConsulta($query);
         return $this->getOneData($result);
+    }
+
+    function get_problems_to_solve($user, $course) {
+        $query = "SELECT distinct(pr.id_problem) FROM topic t, participant p , problem pr WHERE p.id_user = '$user' AND t.id_course = '$course' AND t.id_course = p.id_course AND pr.id_course = t.id_course AND pr.id_topic = t.id_topic";
+        return $this->realizarConsulta($query);
     }
 
     //CONTEO
@@ -297,6 +312,11 @@ WHERE participant.id_user=solved.id_user AND solved.id_problem=problem.id_proble
         //echo $query;
         $result = $this->realizarConsulta($query);
         return $this->getOneData($result);
+    }
+
+    function get_is_owner($user, $course) {
+        $query = "SELECT count(*) FROM course WHERE id_course = '$course' AND id_user='$user'";
+        return $this->getOneData($this->realizarConsulta($query));
     }
 
     //PARTICIPANTE
@@ -396,6 +416,18 @@ ORDER BY c DESC
             return true;
         }
         return false;
+    }
+
+    //PERFIL
+
+    function get_number_of_exercises_solved_by_topic($user, $course) {
+        $query = "SELECT t.name as tema, count(s.id_problem) as solved
+                 FROM topic t LEFT JOIN problem p ON (p.id_topic = t.id_topic AND p.id_course = t.id_course ) LEFT JOIN solved s ON (p.id_problem = s.id_problem)
+                 WHERE  t.id_course='$course' AND s.id_user='$user'
+                 GROUP BY t.id_topic
+                 ORDER BY t.name";
+
+        return $this->realizarConsulta($query);
     }
 
 }

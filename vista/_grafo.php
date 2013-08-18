@@ -235,7 +235,7 @@
             });
 
             //agregar nuevo problema al div
-            function addProblemDiv(id, code, problem, level) {
+            function addProblemDiv(id, code, problem, level, code2) {
                 var div = $("#" + crearIdTopic(id));
                 if (div.hasClass('bloqueado')) {
                     //alert("esta bloqueado" + div.attr('id'));
@@ -249,11 +249,11 @@
 
                     if (result == "false") {
                         //alert("no");
-                        var l = "* " + problem + " (" + code + ") <span style='font-size:8px;'>(* " + level + ")</span><br>";
+                        var l = "* <a target='_blank' href='http://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=24&page=show_problem&problem=" + code2 + "'>" + problem + " (" + code + ") <span style='font-size:8px;'></a>(* " + level + ")</span><br>";
                         $("#l" + id).append(l);
                     } else {
                         //  alert("si");
-                        var l = "<li style='background-color:#19AC19'>" + problem + " (" + code + ") <span style='font-size:8px;'>(*" + level + ")</span></li>";
+                        var l = "<li style='background-color:#19AC19'>" + problem + " <a target='_blank' href='http://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=24&page=show_problem&problem=" + code2 + "'>(" + code + ")</a><span style='font-size:8px;'>(*" + level + ")</span></li>";
                         $("#l" + id).append(l);
                     }
 
@@ -301,7 +301,7 @@
                 height: auto;
                 min-height: 90px;
                 min-width: 100px;
-               
+
                 border: 1px solid black; 
                 box-shadow: 2px 2px 19px #aaa;
                 -o-box-shadow: 2px 2px 19px #aaa;
@@ -358,10 +358,11 @@
             while ($r = mysql_fetch_array($problema)) {
                 $code = $r['id_problem'];
                 $name = $r['name'];
+                $code2 = $r['n_problem'];
                 $level = (float) ($r['level'] / 10000);
                 echo "<script>
               
-                    addProblemDiv($idTopic,$code,'" . addslashes($name) . "',$level);
+                    addProblemDiv($idTopic,$code,'" . addslashes($name) . "',$level,$code2);
                     </script>";
             }
         }
