@@ -11,10 +11,10 @@
 
 
                         <ul class="nav nav-list">
-                            <li class="nav-header">Curso</li>
-                            <li id='info-general' class=""><a href="curso.php?option=administrar&idCurso=<?php echo $idCurso ?>">Información general</a></li>
+                            <li class="nav-header">Course</li>
+                            <li id='info-general' class=""><a href="curso.php?option=administrar&idCurso=<?php echo $idCurso ?>">General information</a></li>
 
-                            <li class="nav-header">Estudiantes</li>
+                            <li class="nav-header">Students</li>
 
                             <?php while ($data = mysql_fetch_array($users)) { ?>
                                 <li id='usuario-<?php echo $data['id_user'] ?>'><a class='suspensive-points'  href="curso.php?option=administrar&idCurso=<?php echo "{$data['id_course']}&idUser={$data['id_user']}" ?>"><i class='icon icon-chevron-right'></i><?php echo " ({$data['username']}) {$data['name']} {$data['lastName']}" ?></a></li>
@@ -59,12 +59,3 @@
     </div>
 </div>
 
-<style>
-    .suspensive-points{
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        font-size: 11px;
-    }
-
-</style>

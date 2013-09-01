@@ -2,20 +2,31 @@
     <div class="span12">
 
 
-        <p><i class='icon icon-ok-circle'></i> <span class='text-big'>Nombre:</span><span class=''> <?php echo " {$_data['user']['nombre']} {$_data['user']['apellido']}" ?></span></p>
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="span1">
+                    <img src='./public/img/avatars/<?php echo $_data['user']['foto'] ?>.png'>
+                </div>
+                <div class="span11">
+                    <p><i class='icon icon-ok-circle'></i> <span class='text-big'>Name:</span><span class=''> <?php echo " {$_data['user']['nombre']} {$_data['user']['apellido']}" ?></span></p>
 
-        <p><i class='icon icon-ok-circle'></i> <span class='text-big'>Usuario:</span><span class=''> <?php echo " {$_data['user']['username']}" ?></span></p>
+                    <p><i class='icon icon-ok-circle'></i> <span class='text-big'>User:</span><span class=''> <?php echo " {$_data['user']['username']}" ?></span></p>
+
+                </div>
+            </div>
+        </div>
 
 
 
-        <p class='text-big'><i class='icon icon-ok-circle'></i> Ejercicios resueltos</p>
+
+        <p class='text-big'><i class='icon icon-ok-circle'></i> Solved problems</p>
 
 
         <table class="table table-striped table-bordered">
             <thead>
-            <th>Tema</th>
-            <th># de ejercicios resueltos</th>
-            <th>Mínimo</th>
+            <th>Topic</th>
+            <th># of solved problems</th>
+            <th>Minimum</th>
             </thead>
             <tbody>
                 <?php
@@ -45,14 +56,17 @@
             </tbody>    
         </table>   
 
-        <p class='text-big'><i class='icon icon-ok-circle'></i>Envios</p>
+        <?php
+         if(isset($option) && $option=="administrar"){
+        ?>        
+        <p class='text-big'><i class='icon icon-ok-circle'></i>Submissions</p>
 
         <table class="table table-striped table-bordered">
             <thead>
-            <th>Ejercicio</th>
+            <th>Problem</th>
 <!--            <th>Tema</th>-->
-            <th>Fecha</th>
-            <th>Resultado</th>
+            <th>Date</th>
+            <th>Result</th>
             </thead>
             <tbody>
 
@@ -70,7 +84,7 @@
             </tbody>    
         </table>    
 
-
+            <?php }  ?>
 
     </div>
 </div>
@@ -85,14 +99,14 @@
 
 
 <script>
-     USER = '<?php echo $idUser ?>'
-    $(document).ready(function(){
-        
-         
-         $("#usuario-" + USER).addClass('active');
-    
-});
-   
+    USER = '<?php echo $idUser ?>'
+    $(document).ready(function() {
 
-    
+
+        $("#usuario-" + USER).addClass('active');
+
+    });
+
+
+
 </script>

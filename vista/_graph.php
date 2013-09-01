@@ -335,7 +335,7 @@
             }
 
             .topic{
-                position: fixed;
+                position: absolute;
                 height: auto;
                 min-height: 90px;
                 min-width: 100px;

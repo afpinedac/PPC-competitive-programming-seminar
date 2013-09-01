@@ -1,13 +1,11 @@
 
-<div id="fade" class="oculto"></div>
-<div id="light" class="oculto">
-    <img src=".public/img/cargando.gif"></img>
-</div>
+
+
 <!-- Modal -->
 <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">LOGIN</h3>
+        <h3 id="myModalLabel"><i class='icon icon-lock'></i> LOGIN</h3>
     </div>
     <div class="modal-body">
         <div id="merror" class="alert alert-error hide">
@@ -16,17 +14,19 @@
         </div> 
         <form id="form1" class="form-horizontal" onsubmit="return login();">
             <div class="control-group">
-                <label class="control-label" for="inputEmail">Usuario:</label>
+                <label class="control-label" for="inputEmail">Username:</label>
                 <div class="controls">
                     <input type="text" id="inputEmail" name="username" placeholder="Usuario UVA">
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="inputPassword">Contraseña:</label>
+                <label class="control-label" for="inputPassword">Password:</label>
                 <div class="controls">
                     <input type="password" id="inputPassword" name="pass" placeholder="Password">
                 </div>
             </div>
+            <center><p style="margin-top: -20px;"><a href='index.php?option=reestablecer-password'>Did you forget your password?</a></p></center>
+
 
 
             <div class="control-group">
@@ -34,13 +34,13 @@
                     <!-- <label class="checkbox">
                          <input type="checkbox"> Remember me
                      </label>  -->
-                    <button type="submit" class="btn btn-primary" onClick="">Entrar</button>
+                    <button type="submit" class="btn btn-primary" onClick="">Enter</button>
                 </div>
             </div>
         </form>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+        <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Close</button>
     </div>
 </div>
 

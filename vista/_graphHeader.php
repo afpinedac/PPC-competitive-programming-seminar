@@ -17,18 +17,18 @@
                 <!-- .nav, .navbar-search, .navbar-form, etc -->
                 <ul class="nav">
                     <li >
-                        <a href="#" id="save" onClick="save(1);"><i class="icon icon-hdd"></i> Guardar</a>
+                        <a href="#" id="save" onClick="save(1);"><i class="icon icon-save"></i> Save</a>
                     </li>
                     <!--                    <li >
                                             <a href="#">Link2</a>
                                         </li>-->
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Información
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Information
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                            <li> <a href="#">Mis Estadisticas</a><li>
-                            <li> <a href="#">Ranking del curso</a><li>
+                            <li> <a href="#">Statistics</a><li>
+                            <li> <a href="#">Ranking</a><li>
 
 
 
@@ -36,15 +36,15 @@
                     </li>    
                 </ul>  
                 <ul class="nav pull-right">
-                    <li> <a href="curso.php"><i class="icon icon-share-alt"></i> Regresar</a><li>
+                    <li> <a href="curso.php"><i class="icon icon-share-alt"></i> Back</a><li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i><?php echo ' ' . $_SESSION['user']['name'] ?>
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                            <li> <a href="#"><i class="icon icon-edit"></i> Editar Información</a><li>
+                            <li> <a href="#"><i class="icon icon-edit"></i> Edit information</a><li>
                             <li class="divider"></li>   
-                            <li> <a href="curso.php?option=logout"><i class="icon icon-off"></i> Salir</a><li>
+                            <li> <a href="curso.php?option=logout"><i class="icon icon-off"></i> Log out</a><li>
 
                         </ul>    
                     </li>   

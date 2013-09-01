@@ -16,9 +16,7 @@
 
         </div> 
 
-        <div class="hide">
-            hola  
-        </div>         
+
     </div>
     <div class="modal-body">
         <h5 id="myModalLabel">Agregar ejercicio</h5>
@@ -29,12 +27,12 @@
             <div class="span4">
                 <select id="listaEjercicios" multiple="multiple" size="8">
                 </select>
-                <div><button class="btn btn-danger">Eliminar</button></div>
+                <div><button class="btn btn-danger" onclick="modal.eliminar_ejercicio()">Delete</button></div>
             </div>
 
             <div class="span7 offset1 alert alert-info">
                 <p>Información</p>
-                <p><strong>Número de Ejercicios: </strong><?php echo (isset($data)) ? $data['nejercicios'] : "-" ?></p>
+                <p><strong>Número de Ejercicios: </strong><?php echo (isset($data['nejercicios'])) ? $data['nejercicios'] : "-" ?></p>
             </div>
         </div>
 
@@ -47,6 +45,40 @@
 
 
 <script>
+
+
+            modal = {
+                eliminar_ejercicio: function() {
+                    ejercicio = $("#listaEjercicios option:selected").attr('id');
+                    if (ejercicio != undefined) {
+
+                        $.ajax({
+                            dataType: "",
+                            type: 'post',
+                            url: "jx_topic.php?option=eliminarEjercicio",
+                            data: {
+                                id_problem: ejercicio,
+                                id_topic: editing
+                            },
+                            success: function(data) {
+                                if (data == 1) {
+                                    $("#listaEjercicios option:selected").remove();
+                                } else {
+                                    alert('Se ha generado un problema eliminando el ejercicio');
+                                }
+                            }
+                        });
+
+
+
+                    }
+
+                }
+            }
+
+
+
+
 
             //funcion que valida toda la informacion escrita
             function validar() {

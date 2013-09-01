@@ -2,13 +2,13 @@
 <div class="container">
     <div class="row-fluid">
         <div  class="span12">
-            <button id="subirRecurso" class="btn btn-success" data-modo="close">Subir recurso</button>
+            <button id="subirRecurso" class="btn btn-success" data-modo="close"><i class='icon icon-cloud-upload'></i> Upload resource</button>
             <br><br>
             <div id="fsubir" class="span12 hide">                
                 <form class="form-inline" action="modulo.php?option=crearRecurso" method="post" >
                     <input type="text" class="input-large" name="description" placeholder="Descripción" required>
                     <input type="text" class="input-large" name="url" placeholder="URL" required>
-                    <button type="submit" class="btn btn-info">Subir</button>
+                    <button type="submit" class="btn btn-info"><i class='icon icon-upload'></i> Upload</button>
                 </form>
             </div>   
         </div> 
@@ -19,12 +19,12 @@
 
             <?php if ($n_recursos > 0) { ?>
 
-                <table class="table table-bordered table-hover">
+                <table class="table table-bordered table-hover table-condensed">
                     <thead>
                         <tr style='background-color: #e5e5e5' id="header_ranking" class="success">
-                            <th><center><h5>Recurso</h5></center></th> 
-                    <th><center><h5>Usuario que lo subió</h5></center></th>                                
-                    <th><center><h5>Eliminar</h5></center></th>                                
+                            <th><center><h5>Resource</h5></center></th> 
+                    <th><center><h5>User who has uploaded it</h5></center></th>                                
+                    <th><center><h5>Delete</h5></center></th>                                
                     </tr>    
                     </thead>
                     <tbody>
@@ -36,17 +36,17 @@
                         <td>
                             <?php if ($current_user == $rw['id_user']) { ?>
                                 <form method="post" action="modulo.php?option=eliminarRecurso">
-                                    <center><button class='btn btn-danger'><i class='icon icon-remove icon-white'></i> Eliminar</button> </center>  
+                                    <center><button class='btn btn-danger'><i class='icon icon-remove icon-white'></i> Delete</button> </center>  
                                     <input type="hidden" name="id_resource" value='<?php echo $rw['id_resource'] ?>'>
                                 </form>
                                 <?php
                             } else {
                                 ?>
-                                <center><button class='btn'>Bloqueado</button></center>
-                                <?php
-                            }
+                        <center><button class='btn'><i class='icon icon-lock'></i></button></center>
+                            <?php
                         }
-                        ?>
+                    }
+                    ?>
                     </td> 
                     </tbody>   
                 </table>   
@@ -54,7 +54,7 @@
                 ?>
 
                 <div class="alert alert-error">
-                    <p><center>ESTE CURSO NO TIENE RECURSOS</center></p>
+                    <p><center>THIS COURSE HAS NOT COURSES</center></p>
                 </div>
 
 

@@ -175,7 +175,7 @@
 
 
 
-                $("#" + crearIdTopic(id) + " .topicName").html("<u style='font-size:20px;'>" + result.name + "</u><br> (" + result.number_solved_problems + "/" + result.number_of_problems + ") Desbloquear con:" + result.minimum_solved);
+                $("#" + crearIdTopic(id) + " .topicName").html("<p style='font-size:17px;' class='suspensive-points'><strong><i class='icon icon-chevron-sign-right'></i> <u>" + result.name + "</u></strong></p><p class='less-space'>  (" + result.number_solved_problems + "/" + result.number_of_problems + ") Desbloquear con:" + result.minimum_solved) +"</p>";
             }
 
 
@@ -249,11 +249,11 @@
 
                     if (result == "false") {
                         //alert("no");
-                        var l = "* <a target='_blank' href='http://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=24&page=show_problem&problem=" + code2 + "'>" + problem + " (" + code + ") <span style='font-size:8px;'></a>(* " + level + ")</span><br>";
+                        var l = "<li class='suspensive-points'><a target='_blank' href='http://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=24&page=show_problem&problem=" + code2 + "'>(<span style='font-size: 8px;'>" + code + "</span>)</a> <span style='font-size:8px;'>(*" + level + ")</span> " + problem + "</li>";
                         $("#l" + id).append(l);
                     } else {
                         //  alert("si");
-                        var l = "<li style='background-color:#19AC19'>" + problem + " <a target='_blank' href='http://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=24&page=show_problem&problem=" + code2 + "'>(" + code + ")</a><span style='font-size:8px;'>(*" + level + ")</span></li>";
+                        var l = "<li style='background-color:#19AC19;' class='suspensive-points'><a target='_blank' href='http://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=24&page=show_problem&problem=" + code2 + "'>(<span style='font-size: 8px;'>" + code + "</span>)</a> <span style='font-size:8px;'>(*" + level + ")</span><em>" + problem + "</em></li>";
                         $("#l" + id).append(l);
                     }
 
@@ -292,15 +292,16 @@
 
             .bloqueado{
                 background-image: url("public/img/candado.gif");
+               
             }
 
 
 
             .topic{
-                position: fixed;
+                position: absolute;
                 height: auto;
                 min-height: 90px;
-                min-width: 100px;
+                max-width: 220px;
 
                 border: 1px solid black; 
                 box-shadow: 2px 2px 19px #aaa;

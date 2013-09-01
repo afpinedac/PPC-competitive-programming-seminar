@@ -22,7 +22,7 @@ if (isset($_GET['option'])) {
         $problems = $c->getAllProblemas($current_course, $idTopic);
         $str = "";
         while ($data = mysql_fetch_array($problems)) {
-            $str.="<option>" . $data['name'] . "</option>"; //aqui pongo los colores
+            $str.="<option id='{$data['id_problem']}'>" . $data['name'] . "</option>"; //aqui pongo los colores
         }
         echo $str;
     } else if ($option == "connect") {
@@ -52,6 +52,14 @@ if (isset($_GET['option'])) {
             }
         }
         echo $free ? "false" : "true";
+    } else if ($option == "eliminarEjercicio") {
+        $data = array(
+            'id_topic' => $id_topic,
+            'id_problem' => $id_problem,
+            'id_course' => $current_course
+        );
+        $c->eliminar_problema_de_topic($data);
+        echo "1";
     }
 } else {
     

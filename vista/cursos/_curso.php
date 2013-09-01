@@ -21,29 +21,29 @@
                     </li>-->
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class='icon-book'></i> Cursos
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class='icon-book'></i> Courses
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                            <li> <a href="curso.php"> Mis Cursos</a><li>
-                            <li> <a href="curso.php?option=inscribir">Inscribir nuevo</a><li>
+                            <li> <a href="curso.php"> My courses</a><li>
+                            <li> <a href="curso.php?option=inscribir">Register new</a><li>
                                 <?php if ($_SESSION['user']['rol'] == 1): ?>                                    
-                                <li> <a href="curso.php?option=crearNuevo">Crear nuevo</a><li>
+                                <li> <a href="curso.php?option=crearNuevo">Create new</a><li>
                                 <?php endif; ?>
 
                         </ul>    
                     </li>    
                 </ul>  
                 <ul class="nav pull-right">
-                    <li> <a href="http://uhunt.felix-halim.net/id/<?php echo $info['uva_id']; ?>" target="_blank"> Mi UVA</a><li>
+                    <li> <a href="http://uhunt.felix-halim.net/id/<?php echo $info['uva_id']; ?>" target="_blank"> My UVA</a><li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i><?php echo ' ' . $_SESSION['user']['name'] ?>
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                            <li> <a href="curso.php?option=editarInformacion"><i class='icon-edit'></i> Editar Información</a><li>
+                            <li> <a href="curso.php?option=editarInformacion"><i class='icon-edit'></i> Edit Information</a><li>
                             <li class="divider"></li>   
-                            <li> <a href="curso.php?option=logout"><i class='icon-off'></i> Salir</a><li>
+                            <li> <a href="curso.php?option=logout"><i class='icon-off'></i> Log out</a><li>
 
                         </ul>    
                     </li>   

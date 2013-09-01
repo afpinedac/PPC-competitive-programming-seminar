@@ -8,7 +8,7 @@ if (isset($_GET['option'])) {
       //  var_dump($_POST);
         $c = new conector_mysql();
         $c->registrarUser($_POST);
-        echo "<script>alert('usuario registrado correctamente...')</script>";
+        echo "<script>alert('User registered correctly')</script>";
         echo "<script>location.href='index.php'</script>";
     }
 } else {

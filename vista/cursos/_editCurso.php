@@ -10,14 +10,14 @@
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label" for="codigo">Codigo</label>
+                    <label class="control-label" for="codigo">Code</label>
                     <div class="controls">
                         <input type="text" id="codigo" name="codigo" placeholder="Ingrese un codigo" value="<?php echo $data['code'] ?>">
                     </div>
                 </div>
                 <div class="control-group">
                     <div class="controls">                       
-                        <button type="submit" class="btn btn-success">Editar</button>
+                        <button type="submit" class="btn btn-success">Edit</button>
                     </div>
                 </div>
             </form>

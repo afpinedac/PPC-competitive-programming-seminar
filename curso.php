@@ -87,7 +87,7 @@ if (isset($_SESSION['user']['username'])) {
         } else if ($option == "editarInfo") {
             $query = "UPDATE user SET name='$name', lastName='$lastName', password='$password',username='$username',email='$email', university='$university' WHERE id_user='$id_user'";
             $c->realizarConsulta($query);
-            echo "<script>alert('La información fue actualizada correctamente')</script>";
+            echo "<script>alert('Information has updated correctly')</script>";
             echo "<script>location.href='curso.php?option=editarInformacion'</script>";
         } else if ($option == "administrar" && isset($_GET['idCurso'])) {
 
@@ -101,6 +101,7 @@ if (isset($_SESSION['user']['username'])) {
                 if (isset($idUser)) {
                     $user = $c->getInfoUser($idUser);
                     $_data['user']['nombre'] = $c->getOneField($user, 'name');
+                    $_data['user']['foto'] = $c->getOneField($user, 'foto');
                     $_data['user']['apellido'] = $c->getOneField($user, 'lastName');
                     $_data['user']['username'] = $c->getOneField($user, 'username');
                     $_data['user']['topics'] = $c->getAllTopics($idCurso); //$c->get_number_of_exercises_solved_by_topic($idUser, $idCurso);
@@ -138,15 +139,24 @@ if (isset($_SESSION['user']['username'])) {
 
 function mostrarCursos() {
     global $c, $current_user, $current_user_rol;
+    $user = $c->getInfoUser($current_user);
+    $data['user']['username'] = $_SESSION['user']['username'];
+    $data['user']['full_name'] = $c->getOneField($user, 'name') . " " . $c->getOneField($user, 'lastName');
+    $data['user']['university'] = $c->getOneField($user, 'university');
+    $data['user']['foto'] = $c->getOneField($user, 'foto');
     if ($cursos = $c->getMyCursos($current_user)) {
         require("./vista/cursos/_listaCursos.php");
     } else {
         $data['tipo'] = "error";
-        $data['message'] = "Actualmente no tiene cursos inscritos";
+        $data['message'] = "<em>Right now, you don't have any course registered!!</em>";
         require("./vista/templates/_message.php");
         $data['tipo'] = "error";
-        $data['message'] = "Si desea puede inscribirse al curso del semillero de Programación de UNALMED, código: semillero@13";
+        $data['message'] = "If you want you can register the National University of Colombia programming course </p>code: <em>semillero@13</em> <a href='curso.php?option=inscribir&code=semillero@13'>[here]</a></p>";
         require("./vista/templates/_message.php");
+        if ($_SESSION['user']['rol'] == 1) {
+            $data['message'] = "If you're a teacher you can create your own  <a href='curso.php?option=crearNuevo'>[here]</a>";
+            require("./vista/templates/_message.php");
+        }
     }
 
     if ($current_user_rol == 1) {

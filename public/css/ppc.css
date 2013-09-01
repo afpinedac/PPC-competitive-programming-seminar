@@ -1,0 +1,42 @@
+img#fotoavatar{
+    height: 120px;
+    width: 120px;
+    padding-top: 35px;
+    padding-left: 12px;
+}
+
+img.fotoavatar-ranking{
+    height: 50px;
+    width:  50px;
+}
+
+img#programador-de-la-semana{
+    height: 60px;
+    width: 60px;
+}
+
+.suspensive-points{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 11px;
+}
+
+.less-space{
+    line-height: 2px;
+}
+
+td,th{   
+    text-align: center !important;
+    vertical-align: middle !important ;
+}
+
+
+th{
+    font-family: 'Cabin Condensed', sans-serif;
+}
+
+.title{
+    font-family: 'Maiden Orange', cursive;
+}
+

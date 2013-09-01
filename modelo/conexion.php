@@ -66,7 +66,12 @@ class conector_mysql {
     //FUNCIONES DE LECTURA DE DATOS;
     //USUARIO
     function getInfoUser($id) {
+
         return $this->realizarConsulta("SELECT * FROM user WHERE id_user='$id'");
+    }
+
+    function getInfoUserByCorreo($email) {
+        return $this->realizarConsulta("SELECT * FROM user WHERE email='$email'");
     }
 
     function getID($username, $pass) { // veriifico si existe el user
@@ -158,7 +163,7 @@ class conector_mysql {
     //TOPIC 
     function getInfoTopic($idTopic, $idCourse) {
         $query = "SELECT * FROM topic WHERE id_topic='$idTopic' AND id_course='$idCourse'";
-      //  echo $query;
+        //  echo $query;
         return $this->realizarConsulta($query);
     }
 
@@ -394,7 +399,7 @@ WHERE participant.id_user=solved.id_user AND solved.id_problem=problem.id_proble
     }
 
     function getRankingCurso($curso) {
-        $query = "SELECT user.id_user,username,count(distinct(problem.id_problem)) AS c
+        $query = "SELECT user.id_user,username,count(distinct(problem.id_problem)) AS c,user.foto
 FROM ((user NATURAL JOIN participant) LEFT JOIN solved ON (user.id_user=solved.id_user)) LEFT JOIN problem ON(problem.id_problem=solved.id_problem)
 WHERE participant.id_course = '$curso' AND problem.id_course = '$curso'
 GROUP BY username
@@ -428,6 +433,51 @@ ORDER BY c DESC
                  ORDER BY t.name";
 
         return $this->realizarConsulta($query);
+    }
+
+    //AVATAR
+
+    function actualizar_avatar($data) {
+        $query = "UPDATE user SET foto = '{$data['foto']}' WHERE id_user = '{$data['id_user']}'";
+        $this->realizarConsulta($query);
+    }
+
+    function get_programador_semana($curso) {
+        $time = time();
+        $query = "SELECT u.username, count(*) as total, u.foto
+FROM participant p, user u,solved s, problem pr
+WHERE p.id_user = u.id_user AND  u.id_user = s.id_user AND pr.id_problem = s.id_problem AND pr.id_course = '$curso' AND p.id_course = '$curso' AND s.date > $time - 60 * 60 * 24 * 7
+GROUP BY u.username
+ORDER BY total DESC 
+LIMIT 1";
+        return mysql_fetch_array($this->realizarConsulta($query));
+    }
+
+    function get_number_of_solved_in_days($username, $curso, $days) {
+        $time = time();
+        $query = "SELECT  count(*) as total
+FROM participant p, user u,solved s, problem pr
+WHERE p.id_user = u.id_user AND  u.id_user = s.id_user AND pr.id_problem = s.id_problem AND pr.id_course = '$curso' AND p.id_course = '$curso' AND s.date > $time - 60 * 60 * 24 * 7
+AND u.username = '$username';
+    ";
+        $value = mysql_fetch_array($this->realizarConsulta($query));
+        return $value['0'];
+    }
+
+    function eliminar_problema_de_topic($data) {
+        $query = "DELETE FROM problem WHERE id_problem = '{$data['id_problem']}' AND id_topic = '{$data['id_topic']}' AND id_course = '{$data['id_course']}'";
+        $this->realizarConsulta($query);
+    }
+
+    function correo_exists($email) {
+        $query = "SELECT count(*) FROM user WHERE email = '$email'";
+        $result = $this->getOneData($this->realizarConsulta($query));
+        return $result == 1 ? true : false;
+    }
+
+    function cambiar_password($data) {
+        $query = "UPDATE user SET password = '{$data['password']}'  WHERE email = '{$data['email']}'";
+        $this->realizarConsulta($query);
     }
 
 }
