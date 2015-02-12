@@ -1,9 +1,4 @@
 <?php
-
-
-echo "esto es un test";
-exit;
-
 require("include.php");
 require("./vista/templates/header.php");
 
