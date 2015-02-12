@@ -4,6 +4,9 @@ require("./vista/templates/header.php");
 
 $c = new conector_mysql();
 
+echo "esto es un error xd";
+echo "esto es otro error";
+exit;
 if (isset($_GET['option'])) {
     $opt = $_GET['option'];
     if ($opt == "login") {
