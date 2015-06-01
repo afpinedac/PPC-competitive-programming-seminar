@@ -59,7 +59,7 @@
       async: false
     }).responseText
 
-    window.alert(result);
+    
     if (result === "false") {
       $("#merror").removeClass('hide');
       $("#fade").removeClass('overlay');

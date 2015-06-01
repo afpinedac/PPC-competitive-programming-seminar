@@ -40,7 +40,7 @@
                         if (result == "ok") {
                             jsPlumb.detach(w);
                         } else {
-                            alert("Ha ocurrido un error");
+                            alert("A problem has ocurred, please contact to the administrator: andr3s2@gmail.com");
                         }
                     }
                 });
@@ -73,7 +73,7 @@
                     conectar(div1, div2);
 
                 } else {
-                    alert("La conexíon no es válida");
+                    alert("Invalid link");
                 }
             }
 
@@ -302,7 +302,7 @@
                     //   alert(result);                    
                 });
                 if (modo == 1)
-                    alert("Curso Guardado correctamente");
+                    alert("Information saved correctly");
                 $("#save").removeClass("unsave");
                 $("div").removeClass("selected");
                 selectedDiv = null;

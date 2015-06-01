@@ -23,9 +23,9 @@ $(document).ready(function(){
             $.get("informacion.php?option=getNameProblem&id="+value+"&tema="+node_actual,function(data,status){
               alert(data);
                 if(data=="no encontrado"){
-                    alert("Problema no encontrado");   
+                    alert("Problem not found");   
                 }else if(data=="ya existe"){
-                    alert("El problema ya pertenece al tema");
+                    alert("The problema already exist in the topic");
                 }else{
                     addContent(node_actual,"*"  + data + "<br/>");
                 }                    
@@ -34,7 +34,7 @@ $(document).ready(function(){
             $("#m_numero").html("");
             $("#myModal").modal("hide");                  
         }else{
-            alert("Numero invalido");
+            alert("Invalid number");
         }
     });
              
