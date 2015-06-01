@@ -16,7 +16,7 @@
 
                             <li class="nav-header">Students</li>
 
-                            <?php while ($data = mysql_fetch_array($users)) { ?>
+                            <?php while ($data = mysqli_fetch_array($users)) { ?>
                                 <li id='usuario-<?php echo $data['id_user'] ?>'><a class='suspensive-points'  href="curso.php?option=administrar&idCurso=<?php echo "{$data['id_course']}&idUser={$data['id_user']}" ?>"><i class='icon icon-chevron-right'></i><?php echo " ({$data['username']}) {$data['name']} {$data['lastName']}" ?></a></li>
                                 <?php
                             }

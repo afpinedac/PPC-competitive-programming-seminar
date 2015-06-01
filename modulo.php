@@ -122,7 +122,7 @@ function get_submissions($user, $course, $username) {
 
     $arr_solve = array();
 
-    while ($row = mysql_fetch_array($solve)) {
+    while ($row = mysqli_fetch_array($solve)) {
         $arr_solve[] = $row['id_problem'];
     }
 
@@ -167,7 +167,7 @@ function mapear_problemas($to_solve) {
 
     $values = array();
 
-    while ($row = mysql_fetch_array($result)) {
+    while ($row = mysqli_fetch_array($result)) {
         $values[] = $row['id_problem'];
     }
     return $values;

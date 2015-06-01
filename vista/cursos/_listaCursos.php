@@ -40,7 +40,9 @@
 
                                 //var_dump($cursos);
                                 $current_course = null;
-                                while ($data = mysql_fetch_array($cursos)) {
+
+
+                                while ($data = mysqli_fetch_array($cursos)) {
                                     // var_dump($data);
                                     // $current_course = $data['id_course'];
                                     $result = $c->getInfoCurso($data['id_course']);
@@ -96,7 +98,7 @@ function getPosition($course) {
     $pos = 0;
     $lista = $c->getRankingCurso($course);
     //var_dump($course);
-    while ($data = mysql_fetch_array($lista)) {
+    while ($data = mysqli_fetch_array($lista)) {
 
         if ($data['username'] == $username) {
             return++$pos;

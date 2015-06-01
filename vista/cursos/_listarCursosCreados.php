@@ -23,7 +23,7 @@
                     <?php
                     $c = new conector_mysql();
                     //var_dump($cursos);
-                    while ($data = mysql_fetch_array($cursos)) {
+                    while ($data = mysqli_fetch_array($cursos)) {
                         $result = $c->getInfoCurso($data['id_course']);
                         $participant = $c->getInfoParticipant($data['id_course'], $current_user);
                         $profesor = $c->getInfoUser($c->getOneField($result, 'id_user'));

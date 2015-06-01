@@ -12,7 +12,7 @@ if (isset($_GET['option'])) {
       //  echo "$tema";
         //verificamos si ese problema ya existe en el tema
         $temas = $c->getAllTemas();
-        while ($data = mysql_fetch_array($temas)) {
+        while ($data = mysqli_fetch_array($temas)) {
             if ($tema == util::generateID($data[1], $data[2])) { //encontramos el tema
                     echo "tema encontrado";
                 if ($c->existeProblemaEnTema($data[0], ws::getNameProblem($idProblem))) {

@@ -21,9 +21,8 @@ class conector_mysql {
         $this->bd = 'ppc';
         //  $this->puerto = 5432;
         $this->usuario = 'root';
-        $this->password = '';
-        $link = mysql_connect($this->host, $this->usuario, $this->password) or die("No se pudo conectar");
-        mysql_selectdb($this->bd, $link);
+        $this->password = 'root';        
+        $link = mysqli_connect($this->host, $this->usuario, $this->password, $this->bd) or die("No se pudo conectar");        
         $this->link = $link;
     }
 
@@ -341,19 +340,19 @@ WHERE participant.id_user=solved.id_user AND solved.id_problem=problem.id_proble
     }
 
     //funcion que retorna el numero de filas de una consulta
-    function numFilas($result) {
-        return mysql_num_rows($result);
+    function numFilas($result) {      
+        return mysqli_num_rows($result);
     }
 
     function realizarConsulta($query) {
-        if (!$this->result = mysql_query($query, $this->link)) {
+        if (!$this->result = mysqli_query($this->link, $query)) {
             throw new Exception("Se ha generado un error realizando la consulta: " . $query);
         }
         return $this->result;
     }
 
     function cerrarConexion() {
-        mysql_close($this->link);
+        mysqli_close($this->link);
     }
 
     function getProblems($idNode) {
@@ -368,13 +367,14 @@ WHERE participant.id_user=solved.id_user AND solved.id_problem=problem.id_proble
 
     //FUNCIONES UTILES
     function getOneData($result) {
-        $d = mysql_fetch_array($result);
+      
+        $d = mysqli_fetch_array($result);
         return $d[0];
     }
 
-    function getOneField($result, $attr) {
-        mysql_data_seek($result, 0);
-        $d = mysql_fetch_array($result);
+    function getOneField($result, $attr) {      
+        mysqli_data_seek($result, 0);
+        $d = mysqli_fetch_array($result);
         //var_dump($d);
         //echo " $attr  = $d[$attr]";
         return $d[$attr];
@@ -450,7 +450,7 @@ WHERE p.id_user = u.id_user AND  u.id_user = s.id_user AND pr.id_problem = s.id_
 GROUP BY u.username
 ORDER BY total DESC 
 LIMIT 1";
-        return mysql_fetch_array($this->realizarConsulta($query));
+        return mysqli_fetch_array($this->realizarConsulta($query));
     }
 
     function get_number_of_solved_in_days($username, $curso, $days) {
@@ -460,7 +460,7 @@ FROM participant p, user u,solved s, problem pr
 WHERE p.id_user = u.id_user AND  u.id_user = s.id_user AND pr.id_problem = s.id_problem AND pr.id_course = '$curso' AND p.id_course = '$curso' AND s.date > $time - 60 * 60 * 24 * 7
 AND u.username = '$username';
     ";
-        $value = mysql_fetch_array($this->realizarConsulta($query));
+        $value = mysqli_fetch_array($this->realizarConsulta($query));
         return $value['0'];
     }
 

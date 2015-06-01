@@ -21,7 +21,7 @@ if (isset($_GET['option'])) {
     } else if ($option == "getListProblems") {
         $problems = $c->getAllProblemas($current_course, $idTopic);
         $str = "";
-        while ($data = mysql_fetch_array($problems)) {
+        while ($data = mysqli_fetch_array($problems)) {
             $str.="<option id='{$data['id_problem']}'>" . $data['name'] . "</option>"; //aqui pongo los colores
         }
         echo $str;
@@ -42,7 +42,7 @@ if (isset($_GET['option'])) {
     } else if ($option == "isLocked") {
         $parent = $c->getTopicParents($current_course, $idTopic);
         $free = true;
-        while ($p = mysql_fetch_array($parent)) {
+        while ($p = mysqli_fetch_array($parent)) {
             $topic4 = $c->getInfoTopic($p['parent'], $current_course);
             $minimum = $c->getOneField($topic4, 'minimum_solved');
             $sol = $c->getNumberOfProblemsSolved($current_user, $current_course, $p['parent']);

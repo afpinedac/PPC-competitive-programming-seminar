@@ -345,7 +345,7 @@
         #cargamos todos los topics
         // $c = new conector_mysql();
         // sleep(3);
-        while ($rw = mysql_fetch_array($topics)) {
+        while ($rw = mysqli_fetch_array($topics)) {
             $position = $c->getInfoPosition($rw['id_topic'], $current_course);
 
             $idTopic = $c->getOneField($position, 'id_topic');
@@ -356,7 +356,7 @@
                        setInfoTopic($idTopic);
                          </script>";
             $problema = $c->getAllProblemas($current_course, $idTopic);
-            while ($r = mysql_fetch_array($problema)) {
+            while ($r = mysqli_fetch_array($problema)) {
                 $code = $r['id_problem'];
                 $name = $r['name'];
                 $code2 = $r['n_problem'];
@@ -369,7 +369,7 @@
         }
 
 //cargamos las conexiones 
-        while ($data = mysql_fetch_array($connections)) {
+        while ($data = mysqli_fetch_array($connections)) {
             echo "<script>
                 parent.push(" . $data['parent'] . ");
                 child.push(" . $data['child'] . ");

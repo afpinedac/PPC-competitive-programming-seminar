@@ -14,7 +14,7 @@ $c = new conector_mysql();
 $result = $c->realizarConsulta("select id_user,username from user where id_user>=$from AND id_user<=$until");  // eliminar todos los problemas
 
 
-while ($row = mysql_fetch_array($result)) {
+while ($row = mysqli_fetch_array($result)) {
     try {
         load($row['id_user'], $row['username']);
         echo "Listo {$row['username']}<br>";
