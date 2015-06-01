@@ -32,7 +32,7 @@ if (isset($_SESSION['user']['username'])) {
                 mostrarCursos();
             } else {
                 $data['tipo'] = 'error';
-                $data['message'] = "El codigo es inválido";
+                $data['message'] = "Invalid code";
                 require("./vista/templates/_message.php");
                 require("./vista/cursos/_inscribirCurso.php");
             }
@@ -49,12 +49,12 @@ if (isset($_SESSION['user']['username'])) {
         } else if ($option == "crearCurso" && $current_user_rol == 1) {
             if ($c->registrarCurso($current_user, $nombre, $codigo)) {
                 $data['tipo'] = "success";
-                $data['message'] = "Curso creado correctamente";
+                $data['message'] = "Course created correctly";
                 require("./vista/templates/_message.php");
                 mostrarCursos();
             } else {
                 $data['tipo'] = "error";
-                $data['message'] = "El código del curso ya esta en uso";
+                $data['message'] = "This code is already in use";
                 require("./vista/templates/_message.php");
                 require("./vista/cursos/_crearCurso.php");
             }
@@ -167,7 +167,7 @@ function mostrarCursos() {
             require("./vista/cursos/_listarCursosCreados.php");
         } else {
             $data['tipo'] = "error";
-            $data['message'] = "Actualmente no tiene cursos creados";
+            $data['message'] = "Right now you don't have any created course";
             require("./vista/templates/_message.php");
         }
     }

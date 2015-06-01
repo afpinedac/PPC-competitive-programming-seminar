@@ -25,9 +25,9 @@ class ws {
     }
 
     static function getSubmissions($id) {
-        $info = ws::getText("http://uhunt.felix-halim.net/api/subs/" . $id);
+        $info = ws::getText("http://uhunt.felix-halim.net/api/subs-user/" . $id);
         $info = json_decode($info);
-        $options = json_decode($info->subs);
+        $options = $info->subs;
         return $options;
     }
 
